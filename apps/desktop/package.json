@@ -1,35 +1,35 @@
 {
-  "name": "desktop",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "tauri dev",
-    "build": "tauri build",
-    "serve": "vite preview",
-    "start": "tauri dev",
-    "check-types": "tsc --noEmit",
-    "tauri": "tauri",
-    "vite:dev": "vite --port=3002",
-    "vite:build": "vite build"
-  },
-  "devDependencies": {
-    "@tanstack/react-router-devtools": "^1.114.27",
-    "@tanstack/router-plugin": "^1.114.27",
-    "@types/node": "^22.13.13",
-    "@types/react": "^19.0.12",
-    "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.3.4",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^4.0.15",
-    "vite": "^6.2.2",
-    "@tanstack/react-query-devtools": "^5.69.0",
-    "@tauri-apps/cli": "^2.4.0"
-  },
-  "dependencies": {
-    "@zentio/app": "workspace:*",
-    "@tailwindcss/vite": "^4.0.15",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  }
+	"name": "desktop",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "tauri dev",
+		"build": "tauri build",
+		"serve": "vite preview",
+		"start": "tauri dev",
+		"check-types": "tsc --noEmit",
+		"tauri": "tauri",
+		"vite:dev": "vite --port=3002",
+		"vite:build": "vite build"
+	},
+	"devDependencies": {
+		"@tanstack/react-router-devtools": "^1.114.27",
+		"@tanstack/router-plugin": "^1.114.27",
+		"@types/node": "^22.13.13",
+		"@types/react": "^19.0.12",
+		"@types/react-dom": "^19.0.4",
+		"@vitejs/plugin-react": "^4.3.4",
+		"postcss": "^8.5.3",
+		"tailwindcss": "^4.0.15",
+		"vite": "^6.2.2",
+		"@tanstack/react-query-devtools": "^5.69.0",
+		"@tauri-apps/cli": "^2.4.0"
+	},
+	"dependencies": {
+		"@zentio/app": "workspace:*",
+		"@tailwindcss/vite": "^4.0.15",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0"
+	}
 }

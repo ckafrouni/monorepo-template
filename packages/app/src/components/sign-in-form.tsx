@@ -1,27 +1,23 @@
-import { authClient } from "@/lib/auth-client";
-import { useForm } from "@tanstack/react-form";
-import { useNavigate } from "@tanstack/react-router";
-import { toast } from "sonner";
-import z from "zod/v4";
-import Loader from "./loader";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import { authClient } from '@/lib/auth-client';
+import { useForm } from '@tanstack/react-form';
+import { useNavigate } from '@tanstack/react-router';
+import { toast } from 'sonner';
+import z from 'zod/v4';
+import Loader from './loader';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
 
-export default function SignInForm({
-	onSwitchToSignUp,
-}: {
-	onSwitchToSignUp: () => void;
-}) {
+export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void }) {
 	const navigate = useNavigate({
-		from: "/",
+		from: '/',
 	});
 	const { isPending } = authClient.useSession();
 
 	const form = useForm({
 		defaultValues: {
-			email: "",
-			password: "",
+			email: '',
+			password: '',
 		},
 		onSubmit: async ({ value }) => {
 			await authClient.signIn.email(
@@ -32,20 +28,20 @@ export default function SignInForm({
 				{
 					onSuccess: () => {
 						navigate({
-							to: "/dashboard",
+							to: '/dashboard',
 						});
-						toast.success("Sign in successful");
+						toast.success('Sign in successful');
 					},
 					onError: (error) => {
 						toast.error(error.error.message);
 					},
-				},
+				}
 			);
 		},
 		validators: {
 			onSubmit: z.object({
-				email: z.email("Invalid email address"),
-				password: z.string().min(8, "Password must be at least 8 characters"),
+				email: z.email('Invalid email address'),
+				password: z.string().min(8, 'Password must be at least 8 characters'),
 			}),
 		},
 	});
@@ -55,7 +51,7 @@ export default function SignInForm({
 	}
 
 	return (
-		<div className="mx-auto w-full mt-10 max-w-md p-6">
+		<div className="mx-auto mt-10 w-full max-w-md p-6">
 			<h1 className="mb-6 text-center text-3xl font-bold">Welcome Back</h1>
 
 			<form
@@ -119,7 +115,7 @@ export default function SignInForm({
 							className="w-full"
 							disabled={!state.canSubmit || state.isSubmitting}
 						>
-							{state.isSubmitting ? "Submitting..." : "Sign In"}
+							{state.isSubmitting ? 'Submitting...' : 'Sign In'}
 						</Button>
 					)}
 				</form.Subscribe>

@@ -1,2 +1,2 @@
 // Desktop App Entry Point
-import "../../../packages/app/src/main.tsx";
+import '../../../packages/app/src/main.tsx';
