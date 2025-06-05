@@ -11,9 +11,11 @@ import {
 	IconHelp,
 	IconInnerShadowTop,
 	IconListDetails,
+	IconMoon,
 	IconReport,
 	IconSearch,
 	IconSettings,
+	IconSun,
 	IconUsers,
 } from '@tabler/icons-react';
 
@@ -21,6 +23,7 @@ import { NavDocuments } from '@/components/nav-documents';
 import { NavMain } from '@/components/nav-main';
 import { NavSecondary } from '@/components/nav-secondary';
 import { NavUser } from '@/components/nav-user';
+import { useTheme } from '@/components/theme-provider';
 import {
 	Sidebar,
 	SidebarContent,
@@ -32,11 +35,6 @@ import {
 } from '@/components/ui/sidebar';
 
 const data = {
-	user: {
-		name: 'shadcn',
-		email: 'm@example.com',
-		avatar: '/avatars/shadcn.jpg',
-	},
 	navMain: [
 		{
 			title: 'Dashboard',
@@ -112,23 +110,6 @@ const data = {
 			],
 		},
 	],
-	navSecondary: [
-		{
-			title: 'Settings',
-			url: '#',
-			icon: IconSettings,
-		},
-		{
-			title: 'Get Help',
-			url: '#',
-			icon: IconHelp,
-		},
-		{
-			title: 'Search',
-			url: '#',
-			icon: IconSearch,
-		},
-	],
 	documents: [
 		{
 			name: 'Data Library',
@@ -149,6 +130,53 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+	const { theme, setTheme } = useTheme();
+
+	const handleThemeToggle = () => {
+		if (theme === 'light') {
+			setTheme('dark');
+		} else if (theme === 'dark') {
+			setTheme('system');
+		} else {
+			setTheme('light');
+		}
+	};
+
+	const getThemeIcon = () => {
+		if (theme === 'dark') return IconMoon;
+		if (theme === 'light') return IconSun;
+		return IconSun; // system defaults to sun icon
+	};
+
+	const getThemeTitle = () => {
+		if (theme === 'dark') return 'Dark Mode';
+		if (theme === 'light') return 'Light Mode';
+		return 'System Mode';
+	};
+
+	const navSecondary = [
+		{
+			title: 'Settings',
+			url: '#',
+			icon: IconSettings,
+		},
+		{
+			title: getThemeTitle(),
+			icon: getThemeIcon(),
+			onClick: handleThemeToggle,
+		},
+		{
+			title: 'Get Help',
+			url: '#',
+			icon: IconHelp,
+		},
+		{
+			title: 'Search',
+			url: '#',
+			icon: IconSearch,
+		},
+	];
+
 	return (
 		<Sidebar collapsible="offcanvas" {...props}>
 			<SidebarHeader>
@@ -166,10 +194,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			<SidebarContent>
 				<NavMain items={data.navMain} />
 				<NavDocuments items={data.documents} />
-				<NavSecondary items={data.navSecondary} className="mt-auto" />
+				<NavSecondary items={navSecondary} className="mt-auto" />
 			</SidebarContent>
 			<SidebarFooter>
-				<NavUser user={data.user} />
+				<NavUser />
 			</SidebarFooter>
 		</Sidebar>
 	);

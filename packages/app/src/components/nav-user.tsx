@@ -5,6 +5,7 @@ import {
 	IconNotification,
 	IconUserCircle,
 } from '@tabler/icons-react';
+import { Link, useNavigate } from '@tanstack/react-router';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -22,17 +23,57 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from '@/components/ui/sidebar';
+import { Skeleton } from '@/components/ui/skeleton';
+import { authClient } from '@/lib/auth-client';
 
-export function NavUser({
-	user,
-}: {
-	user: {
-		name: string;
-		email: string;
-		avatar: string;
-	};
-}) {
+export function NavUser() {
 	const { isMobile } = useSidebar();
+	const navigate = useNavigate();
+	const { data: session, isPending } = authClient.useSession();
+
+	if (isPending) {
+		return (
+			<SidebarMenu>
+				<SidebarMenuItem>
+					<SidebarMenuButton size="lg">
+						<Skeleton className="h-8 w-8 rounded-lg" />
+						<div className="grid flex-1 text-left text-sm leading-tight">
+							<Skeleton className="h-4 w-24" />
+							<Skeleton className="h-3 w-32" />
+						</div>
+					</SidebarMenuButton>
+				</SidebarMenuItem>
+			</SidebarMenu>
+		);
+	}
+
+	if (!session) {
+		return (
+			<SidebarMenu>
+				<SidebarMenuItem>
+					<SidebarMenuButton size="lg" asChild>
+						<Link to="/login">
+							<Avatar className="h-8 w-8 rounded-lg">
+								<AvatarFallback className="rounded-lg">?</AvatarFallback>
+							</Avatar>
+							<div className="grid flex-1 text-left text-sm leading-tight">
+								<span className="truncate font-medium">Sign In</span>
+								<span className="text-muted-foreground truncate text-xs">Not logged in</span>
+							</div>
+						</Link>
+					</SidebarMenuButton>
+				</SidebarMenuItem>
+			</SidebarMenu>
+		);
+	}
+
+	const user = session.user;
+	const userInitials =
+		user.name
+			?.split(' ')
+			.map((n) => n[0])
+			.join('')
+			.toUpperCase() || '??';
 
 	return (
 		<SidebarMenu>
@@ -44,8 +85,8 @@ export function NavUser({
 							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 						>
 							<Avatar className="h-8 w-8 rounded-lg grayscale">
-								<AvatarImage src={user.avatar} alt={user.name} />
-								<AvatarFallback className="rounded-lg">CN</AvatarFallback>
+								<AvatarImage src={user.image || ''} alt={user.name || ''} />
+								<AvatarFallback className="rounded-lg">{userInitials}</AvatarFallback>
 							</Avatar>
 							<div className="grid flex-1 text-left text-sm leading-tight">
 								<span className="truncate font-medium">{user.name}</span>
@@ -63,8 +104,8 @@ export function NavUser({
 						<DropdownMenuLabel className="p-0 font-normal">
 							<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 								<Avatar className="h-8 w-8 rounded-lg">
-									<AvatarImage src={user.avatar} alt={user.name} />
-									<AvatarFallback className="rounded-lg">CN</AvatarFallback>
+									<AvatarImage src={user.image || ''} alt={user.name || ''} />
+									<AvatarFallback className="rounded-lg">{userInitials}</AvatarFallback>
 								</Avatar>
 								<div className="grid flex-1 text-left text-sm leading-tight">
 									<span className="truncate font-medium">{user.name}</span>
@@ -88,7 +129,20 @@ export function NavUser({
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem>
+						<DropdownMenuItem
+							onClick={() => {
+								authClient.signOut({
+									fetchOptions: {
+										onSuccess: () => {
+											navigate({
+												to: '/login',
+											});
+										},
+									},
+								});
+							}}
+							className="cursor-pointer"
+						>
 							<IconLogout />
 							Log out
 						</DropdownMenuItem>
