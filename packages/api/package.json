@@ -12,6 +12,7 @@
 		"./lib/trpc": "./src/lib/trpc.ts"
 	},
 	"scripts": {
+		"clean": "rm -rf dist .cache node_modules .turbo",
 		"check-types": "tsc --noEmit"
 	},
 	"dependencies": {

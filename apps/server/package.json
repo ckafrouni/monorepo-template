@@ -3,6 +3,7 @@
 	"main": "src/index.ts",
 	"type": "module",
 	"scripts": {
+		"clean": "rm -rf dist .cache node_modules .turbo",
 		"build": "tsc && tsc-alias",
 		"check-types": "tsc --noEmit",
 		"compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",

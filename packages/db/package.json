@@ -10,6 +10,7 @@
 		"./schema/todo": "./src/schema/todo.ts"
 	},
 	"scripts": {
+		"clean": "rm -rf dist .cache node_modules .turbo",
 		"db:push": "drizzle-kit push",
 		"db:studio": "drizzle-kit studio",
 		"db:generate": "drizzle-kit generate",

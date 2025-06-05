@@ -4,6 +4,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
+		"clean": "rm -rf dist .cache node_modules .turbo",
 		"dev": "vite --port=3001",
 		"build": "vite build",
 		"serve": "vite preview",

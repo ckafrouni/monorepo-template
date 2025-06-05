@@ -7,6 +7,10 @@
 			"inputs": ["$TURBO_DEFAULT$", ".env*"],
 			"outputs": ["dist/**"]
 		},
+		"clean": {
+			"cache": false,
+			"persistent": false
+		},
 		"lint": {
 			"dependsOn": ["^lint"]
 		},

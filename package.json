@@ -8,6 +8,8 @@
 	"scripts": {
 		"dev": "turbo dev",
 		"build": "turbo build",
+		"clean": "turbo clean && rm -rf .turbo node_modules .cache",
+		"format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css,scss,yml,yaml,html}\"",
 		"check-types": "turbo check-types",
 		"dev:native": "turbo -F native dev",
 		"dev:web": "turbo -F web dev",
@@ -18,8 +20,7 @@
 		"db:push": "turbo -F @zentio/db db:push",
 		"db:studio": "turbo -F @zentio/db db:studio",
 		"db:generate": "turbo -F @zentio/db db:generate",
-		"db:migrate": "turbo -F @zentio/db db:migrate",
-		"format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css,scss,yml,yaml,html}\""
+		"db:migrate": "turbo -F @zentio/db db:migrate"
 	},
 	"dependencies": {},
 	"devDependencies": {
