@@ -8,6 +8,7 @@
 	"exports": {
 		".": "./src/main.tsx",
 		"./main": "./src/main.tsx",
+		"./App": "./src/App.tsx",
 		"./src/*": "./src/*",
 		"./*": "./src/*"
 	},

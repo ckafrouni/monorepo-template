@@ -7,11 +7,29 @@ use tauri_plugin_deep_link::DeepLinkExt;
 struct InitialUrl(Mutex<Option<String>>);
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
-// Command to get the initial launch URL
+// Command called by frontend to request any pending initial URL
 #[tauri::command]
-fn get_initial_url(initial_url_state: State<InitialUrl>) -> Option<String> {
+fn request_initial_url(app_handle: tauri::AppHandle, initial_url_state: State<InitialUrl>) {
+    println!("🔗 Frontend requested initial URL");
+
+    // Check if we have an initial URL and emit it as a deep-link event
     let mut url = initial_url_state.0.lock().unwrap();
-    url.take() // Take the URL and remove it from state (consume once)
+    if let Some(initial_url) = url.take() {
+        println!("📤 Sending initial URL to frontend: {}", initial_url);
+        drop(url);
+
+        // Emit the initial URL using the same system as subsequent deep links
+        if let Some(webview_window) = app_handle.get_webview_window("main") {
+            match webview_window.emit("deep-link", &initial_url) {
+                Ok(_) => println!("✅ Initial URL emitted successfully"),
+                Err(e) => println!("❌ Failed to emit initial URL: {}", e),
+            }
+        } else {
+            println!("❌ Could not find main webview window");
+        }
+    } else {
+        println!("ℹ️ No initial URL stored");
+    }
 }
 
 pub fn run() {
@@ -65,7 +83,7 @@ pub fn run() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![get_initial_url])
+        .invoke_handler(tauri::generate_handler![request_initial_url])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
