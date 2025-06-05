@@ -7,14 +7,14 @@ import { SiteHeader } from '@/components/site-header';
 
 import data from './-data/data.json';
 
-export const Route = createFileRoute('/analytics/')({
+export const Route = createFileRoute('/_app/analytics/')({
 	component: RouteComponent,
 });
 
 function RouteComponent() {
 	return (
 		<>
-			<SiteHeader />
+			<SiteHeader breadcrumbs={[{ title: 'Analytics', url: '/analytics' }]} />
 			<div className="flex flex-1 flex-col">
 				<div className="@container/main flex flex-1 flex-col gap-2">
 					<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">

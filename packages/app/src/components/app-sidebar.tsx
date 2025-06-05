@@ -44,7 +44,7 @@ const data = {
 			icon: IconDashboard,
 		},
 		{
-			title: 'Lifecycle',
+			title: 'Todos',
 			url: '/todos',
 			icon: IconListDetails,
 		},
@@ -55,7 +55,7 @@ const data = {
 		},
 		{
 			title: 'Projects',
-			url: '#',
+			url: '/project',
 			icon: IconFolder,
 		},
 		{
