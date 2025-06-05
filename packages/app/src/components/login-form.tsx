@@ -156,7 +156,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
 														onChange={(e) => field.handleChange(e.target.value)}
 													/>
 													{field.state.meta.errors.map((error, index) => (
-														<p key={index} className="text-sm text-red-500">
+														<p key={index} className="text-destructive text-sm">
 															{String(error)}
 														</p>
 													))}
@@ -180,7 +180,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
 													onChange={(e) => field.handleChange(e.target.value)}
 												/>
 												{field.state.meta.errors.map((error, index) => (
-													<p key={index} className="text-sm text-red-500">
+													<p key={index} className="text-destructive text-sm">
 														{String(error)}
 													</p>
 												))}
@@ -210,7 +210,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
 													onChange={(e) => field.handleChange(e.target.value)}
 												/>
 												{field.state.meta.errors.map((error, index) => (
-													<p key={index} className="text-sm text-red-500">
+													<p key={index} className="text-destructive text-sm">
 														{String(error)}
 													</p>
 												))}

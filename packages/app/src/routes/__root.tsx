@@ -3,9 +3,9 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import { trpc } from '@/utils/trpc';
 import { type QueryClient } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Outlet, createRootRouteWithContext, useRouterState } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import '../index.css';
 
 import { authClient } from '@/lib/auth-client';
@@ -67,8 +67,8 @@ function RootComponent() {
 				{isFetching || isPending ? <Loader /> : <Outlet />}
 				<Toaster richColors />
 			</ThemeProvider>
-			<TanStackRouterDevtools position="bottom-left" />
-			<ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
+			{/* <TanStackRouterDevtools position="bottom-left" />
+			<ReactQueryDevtools position="bottom" buttonPosition="bottom-right" /> */}
 		</>
 	);
 }
