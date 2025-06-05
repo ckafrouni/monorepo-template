@@ -1,9 +1,7 @@
-
 import z from "zod/v4";
 import { router, publicProcedure } from "../lib/trpc";
-import { todo } from "../db/schema/todo";
+import { todo, db } from "@zentio/db";
 import { eq } from "drizzle-orm";
-import { db } from "../db";
 
 export const todoRouter = router({
   getAll: publicProcedure.query(async () => {

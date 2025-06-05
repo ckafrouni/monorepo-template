@@ -1,8 +1,8 @@
 import "dotenv/config";
 import { trpcServer } from "@hono/trpc-server";
-import { createContext } from "./lib/context";
-import { appRouter } from "./routers/index";
-import { auth } from "./lib/auth";
+import { createContext } from "@zentio/api/lib/context";
+import { appRouter } from "@zentio/api";
+import { auth } from "@zentio/auth";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";

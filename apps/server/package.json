@@ -14,6 +14,9 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
+    "@zentio/api": "workspace:*",
+    "@zentio/db": "workspace:*",
+    "@zentio/auth": "workspace:*",
     "dotenv": "^16.4.7",
     "zod": "^3.25.16",
     "@trpc/server": "^11.0.0",
