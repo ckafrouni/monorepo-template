@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "tauri dev",
-		"build": "tauri build",
+		"build": "tauri build --debug",
 		"clean": "rm -rf .tauri node_modules dist src-tauri/target .cache",
 		"serve": "vite preview",
 		"start": "tauri dev",
@@ -15,21 +15,23 @@
 		"vite:build": "vite build"
 	},
 	"devDependencies": {
+		"@tanstack/react-query-devtools": "^5.69.0",
 		"@tanstack/react-router-devtools": "^1.114.27",
 		"@tanstack/router-plugin": "^1.114.27",
+		"@tauri-apps/cli": "^2.4.0",
 		"@types/node": "^22.13.13",
 		"@types/react": "^19.0.12",
 		"@types/react-dom": "^19.0.4",
 		"@vitejs/plugin-react": "^4.3.4",
 		"postcss": "^8.5.3",
 		"tailwindcss": "^4.0.15",
-		"vite": "^6.2.2",
-		"@tanstack/react-query-devtools": "^5.69.0",
-		"@tauri-apps/cli": "^2.4.0"
+		"typescript": "^5.8.3",
+		"vite": "^6.2.2"
 	},
 	"dependencies": {
-		"@zentio/app": "workspace:*",
 		"@tailwindcss/vite": "^4.0.15",
+		"@tauri-apps/api": "^2.5.0",
+		"@zentio/app": "workspace:*",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0"
 	}

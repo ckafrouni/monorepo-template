@@ -23,6 +23,13 @@
 			"csp": null
 		}
 	},
+	"plugins": {
+		"deep-link": {
+			"desktop": {
+				"schemes": ["zentio"]
+			}
+		}
+	},
 	"bundle": {
 		"active": true,
 		"targets": "all",
