@@ -1,0 +1,74 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Context7 Documentation Strategy
+
+**CRITICAL**: Before generating code involving external libraries, frameworks, or when uncertain about:
+
+- Latest API changes or updates
+- Current best practices
+- Deprecated methods or new alternatives
+- Framework-specific patterns
+- Library compatibility issues
+
+**ALWAYS use Context7 MCP tools in this order:**
+
+1. **First, resolve the library ID:**
+   Use `mcp_context7_resolve-library-id` with the library name to get the exact Context7-compatible ID
+
+2. **Then fetch documentation:**
+   Use `mcp_context7_get-library-docs` with the resolved ID and relevant topic
+
+### Primary Technologies in This Project
+
+Always check Context7 documentation for these key technologies when uncertain:
+
+### When to Use Context7
+
+**MANDATORY Context7 consultation for:**
+
+1. **Migration guides** - When updating major versions
+2. **Breaking changes** - Understanding API changes between versions
+3. **New features** - Latest capabilities and patterns
+4. **Performance optimizations** - Current best practices
+5. **Security updates** - Latest security recommendations
+6. **Integration patterns** - How libraries work together
+7. **Troubleshooting** - Common issues and solutions
+
+### Example Context7 Usage Patterns
+
+```
+// When uncertain about TanStack Router latest features:
+1. mcp_context7_resolve-library-id: "TanStack Router"
+2. mcp_context7_get-library-docs: "/tanstack/router" topic: "file-based routing"
+
+// When uncertain about React 19 patterns:
+1. mcp_context7_resolve-library-id: "React"
+2. mcp_context7_get-library-docs: "/facebook/react" topic: "React 19 features"
+
+// When uncertain about Hono integration:
+1. mcp_context7_resolve-library-id: "Hono"
+2. mcp_context7_get-library-docs: "/honojs/hono" topic: "tRPC integration"
+
+// When uncertain about Tailwind v4:
+1. mcp_context7_resolve-library-id: "Tailwind CSS"
+2. mcp_context7_get-library-docs: "/tailwindcss/tailwindcss" topic: "v4 features"
+
+// When uncertain about Drizzle-kit:
+1. mcp_context7_resolve-library-id: "Drizzle"
+2. mcp_context7_get-library-docs: "/drizzle-team/drizzle-orm" topic: "drizzle-kit"
+
+// When uncertain about Better Auth integration:
+1. mcp_context7_resolve-library-id: "Better Auth"
+2. mcp_context7_get-library-docs: "/better-auth/better-auth" topic: "authentication setup"
+
+// When uncertain about PostgreSQL with Drizzle:
+1. mcp_context7_resolve-library-id: "Drizzle"
+2. mcp_context7_get-library-docs: "/drizzle-team/drizzle-orm" topic: "postgresql integration"
+
+// For version-specific documentation:
+// Use: mcp_context7_get-library-docs: "/org/project/version" for specific versions
+// Example: "/vercel/next.js/v14.3.0-canary.87"
+```

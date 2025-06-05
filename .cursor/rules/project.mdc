@@ -1,0 +1,300 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Zentio Project - Cursor Rules
+
+#### Frontend Stack
+
+- **React 19** - Latest React with Vite build tool
+- **TanStack Router v1** - File-based routing solution
+- **TanStack Query v5** - Data fetching and caching
+- **TanStack Table v8** - Table component
+- **TanStack Form v1** - Form handling
+- **Vite v6** - Build tool and dev server
+- **Tailwind CSS v4** - Latest styling framework
+- **Shadcn/ui** - Component library (stored in packages/ui/components/ui)
+- **Recharts v2** - Charting library
+
+_Always use the latest stable versions unless specified otherwise_
+
+#### Backend Stack
+
+- **Hono v4** - Web framework
+- **tRPC v11** - Type-safe API layer
+- **Better Auth** - Authentication (modern, type-safe auth)
+- **Drizzle-kit** - Database toolkit and ORM
+- **PostgreSQL v16+** - Primary database
+
+_Always use the latest stable versions unless specified otherwise_
+
+#### Development Tools
+
+- **pnpm v10+** - Package manager (preferred)
+- **TypeScript v5** - Type system
+- **Zod v3** - Schema validation
+- **Date-fns v4** - Date utilities
+- **Lucide React** - Icons
+
+_Always use the latest stable versions unless specified otherwise_
+
+## Design Principles
+
+### Clean Industrial Design
+
+- **Favor clean, industrial design aesthetics**
+- Use minimal, functional interfaces that prioritize usability
+- Implement consistent spacing and typography
+- Choose neutral colors with purposeful accent colors
+- Design for clarity and efficiency over decoration
+
+### Code Quality & Debugging
+
+- **Maintain clean HTML structure for easier debugging**
+- **Use semantic, self-documenting CSS classes**
+- Organize code with clear separation of concerns
+- Write descriptive component and function names
+- Keep nesting levels shallow for better readability
+
+## Code Generation Guidelines
+
+### Project Structure Adherence
+
+- Follow the monorepo structure with apps/, packages/, tooling/
+- Use workspace imports (`@zentio/ui`, `@zentio/db`, etc.)
+- Maintain separation between web app, server, and shared packages
+
+### Pnpm Workspace Structure
+
+**Apps (apps/):**
+
+- `@zentio/web` - React 19 web application with TanStack Router
+- `@zentio/server` - Hono backend with tRPC API layer
+- `@zentio/scheduler` - Background job processing and scheduling
+
+**Packages (packages/):**
+
+- `@zentio/ui` - Shared UI components with Shadcn/ui (Tailwind CSS v4)
+- `@zentio/db` - Database schema and Drizzle configuration (PostgreSQL)
+- `@zentio/dal` - Data Access Layer with org-scoped DAOs
+- `@zentio/db-seed` - Database seeding utilities and test data
+
+**Tooling (tooling/):**
+
+- `@zentio/tsconfig` - Shared TypeScript configurations
+
+**Workspace Dependencies:**
+
+- Use `workspace:*` for internal package references
+- Leverage pnpm's efficient dependency management
+- Maintain consistent versions across all packages
+
+### File Structure & Organization
+
+**Route-Based Architecture (TanStack Router):**
+
+```
+apps/web/src/routes/
+├── __root.tsx                    # Root route layout
+├── index.tsx                     # Landing page
+└── $orgSlug/                     # Organization-scoped routes
+    ├── login.tsx                 # Auth routes
+    ├── route.tsx                 # Org layout
+    ├── -components/              # Org-level shared components
+    ├── settings/                 # Settings section
+    └── _pathlessLayout/          # Main app layout
+        ├── route.tsx             # Layout route
+        ├── dashboard/            # Dashboard section
+        ├── data/                 # MRP entities (CRUD)
+        │   ├── workers/
+        │   ├── machines/
+        │   ├── manufacturing-orders/
+        │   ├── parts/
+        │   └── [entity]/
+        │       ├── index.tsx     # List view
+        │       ├── $id.tsx       # Detail view
+        │       └── -components/  # Entity-specific components
+        │           ├── columns.tsx
+        │           ├── [entity]-dialog.tsx
+        │           └── [entity]-sidepanel.tsx
+        ├── planning/             # Planning & scheduling
+        │   ├── index.tsx
+        │   ├── -components/           # Planning UI components
+        │   ├── -features/        # Feature-specific modules
+        │   │   ├── gantt/
+        │   │   ├── scheduler/
+        │   │   └── resource-planning/
+        │   └── -tabs/            # Tab-specific components
+        └── shopfloor/            # Shop floor operations
+```
+
+**Component Organization:**
+
+```
+apps/web/src/components/
+├── layout/                       # Global layout components
+├── forms/                        # Shared form components
+├── tables/                       # Shared table components
+├── charts/                       # Shared chart/visualization components
+├── [global-component].tsx        # Shared across entire app
+└── [domain-component].tsx        # Domain-specific global components
+```
+
+**Naming Conventions:**
+
+- **Files**: kebab-case (`worker-dialog.tsx`, `manufacturing-orders/`)
+- **Folders with prefix `-`**: Internal/private folders with descriptive names (`-components/`, `-tabs/`, `-features/`)
+- **Route parameters**: `$orgSlug`, `$id` for dynamic segments
+- **Components**: PascalCase exports (`WorkerDialog`, `DataTable`)
+- **Folder purposes**: Use clear, descriptive names that indicate functionality
+
+**Entity Structure Pattern:**
+Each MRP entity follows this structure:
+
+- `index.tsx` - List view with filtering, pagination, CRUD operations
+- `$id.tsx` - Detail view for individual entity
+- `-components/` - Entity-specific components
+  - `columns.tsx` - Table column definitions
+  - `[entity]-dialog.tsx` - Add/edit modal
+  - `[entity]-sidepanel.tsx` - Detail sidepanel
+- `-features/` - Complex nested functionality (scheduling, analytics)
+
+**Key Patterns:**
+
+- **Organization scoping**: All routes under `$orgSlug` for multitenancy
+- **Pathless layouts**: Using `_pathlessLayout` for nested layout without URL segments
+- **Co-located components**: Components near their usage with `-components/` folders
+- **Consistent CRUD patterns**: List → Detail → Edit flow for all entities
+- **Filter-enabled lists**: Built-in filtering, search, and pagination
+- **Type-safe routing**: TanStack Router with TypeScript integration
+
+### Frontend Patterns
+
+- Use TanStack Router for file-based routing (React 19 compatible)
+- Implement tRPC for type-safe API calls
+- Use TanStack Query for data fetching and caching
+- **Always use TanStack libraries for consistency across the stack**
+- Apply Tailwind CSS v4 with class-variance-authority for component variants
+- Use Shadcn/ui components from packages/ui/components/ui
+- Use TanStack Form with Zod validation
+- **Prefer pnpm for all package management operations**
+
+### Backend Patterns
+
+- Use Hono as the web framework foundation
+- Use tRPC routers in `/src/routers/` for type-safe APIs
+- Implement authentication with Better Auth (modern, type-safe auth)
+- Use Drizzle-kit with PostgreSQL for database operations and migrations
+- Use database access layer (DAL) from `@zentio/dal`
+- Follow the established schema patterns
+- Integrate Better Auth with tRPC for protected routes
+- Use Better Auth sessions for user management
+
+### Multitenancy & Data Access Strategy
+
+- **Organization-based multitenancy** - Each organization has isolated data access
+- **Org-specific DAL** - All database operations must be scoped to the current organization
+- **PostgreSQL with row-level security** - Database-level tenant isolation
+- **tRPC context with orgId** - Every API call includes organization context
+- **Better Auth organization association** - Users belong to specific organizations
+- **Data isolation patterns** - Ensure no cross-organization data leakage
+
+**DAL Strategy:**
+
+- **Org DAL** - `createOrgDAO(organizationId)` for organization-scoped data
+- **User DAL** - `createUserDAO(userId)` for user-specific data (settings, preferences)
+- **Public DAL** - Direct access for public data (organizations, public configurations)
+- All DAO classes take `organizationId` in constructor for automatic data scoping
+- Use PostgreSQL schemas or RLS (Row Level Security) for tenant isolation
+- Validate organization membership in tRPC middleware before creating org DAL
+- Cache organization-specific data appropriately
+
+**DAL Usage Patterns:**
+
+```typescript
+// Organization-scoped manufacturing data
+const orgDAO = createOrgDAO(organizationId);
+const workers = await orgDAO.workers.findAll();
+const manufacturingOrders = await orgDAO.manufacturingOrders.findByStatus('active');
+
+// User-specific data
+const userDAO = createUserDAO(userId);
+const settings = await userDAO.userSettings.get();
+
+// Public data (no org scoping needed)
+import { OrganizationsDAO } from '@zentio/dal';
+const organizations = await OrganizationsDAO.findAll();
+```
+
+### Component Development
+
+- Create reusable components in `@zentio/ui` package
+- Use Shadcn/ui components from packages/ui/components/ui
+- Use proper TypeScript interfaces and types
+- Implement responsive design with Tailwind CSS v4
+- Follow accessibility best practices
+- **Maintain clean HTML structure for easier debugging**
+- **Use clean, semantic CSS classes that are self-documenting**
+
+### Manufacturing Resource Planning (MRP II) Domain
+
+Zentio is an **MRP II (Manufacturing Resource Planning)** system with comprehensive manufacturing and business management capabilities:
+
+**Core MRP II Functionality:**
+
+- Material Requirements Planning (MRP I integration)
+- Production planning and scheduling
+- Capacity Requirements Planning (CRP)
+- Financial planning and budgeting
+- Business resource planning and allocation
+- Shop floor control and execution
+- Master Production Schedule (MPS) management
+- Sales & Operations Planning (S&OP)
+
+**Key Business Entities:**
+
+- Workers, workstations, shifts management
+- Manufacturing orders and operations
+- Parts, products, and sales orders
+- Bills of Materials (BOMs) and routing
+- Inventory levels and material requirements
+- Production schedules and capacity planning
+
+**Consider MRP II-specific patterns when generating code for:**
+
+- **Complex data relationships** - BOMs, routings, work centers, resource hierarchies
+- **Real-time manufacturing data** - Production status, inventory levels, capacity utilization
+- **Scheduling algorithms** - Resource optimization, capacity planning, constraint management
+- **Financial integration** - Cost accounting, budgeting, variance analysis, profitability
+- **Business planning** - Sales forecasting, demand planning, S&OP processes
+- **Data visualization** - Gantt charts, production dashboards, financial reports (Recharts)
+- **Drag-and-drop functionality** - Schedule management, resource allocation (@dnd-kit)
+- **Material flow tracking** - Inventory movements, work-in-progress, procurement
+- **Performance metrics** - OEE, cycle times, resource efficiency, financial KPIs
+- **Multi-level planning** - Strategic, tactical, and operational decision support
+- **Multi-tenant architecture** - Organization-isolated manufacturing data and processes
+
+### Error Handling & Performance
+
+- Use proper error boundaries and error handling
+- Implement loading states and optimistic updates
+- Follow React 19 patterns and best practices
+- Use Suspense for data fetching where appropriate
+
+### Code Quality
+
+- Use ESLint and Prettier configurations
+- Follow TypeScript strict mode practices
+- Implement proper testing patterns
+- Use proper Git commit conventions
+
+## Decision Making Process
+
+1. **Assess uncertainty** - Am I unsure about any library usage, API, or pattern?
+2. **Consult Context7** - Use MCP tools to get up-to-date documentation
+3. **Verify compatibility** - Ensure the solution works with project dependencies
+4. **Generate code** - Write code following project patterns and latest best practices
+5. **Explain approach** - Document why specific patterns were chosen
+
+**Remember**: Context7 provides real-time, up-to-date documentation that may differ from training data. Always prioritize Context7 information over potentially outdated knowledge when there's uncertainty.

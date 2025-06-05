@@ -1,71 +1,144 @@
-# better-t-stack-1
+# Better T Stack - Zentio Project
 
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines React, TanStack Router, Hono, TRPC, and more.
+A modern full-stack application built with the latest technologies, featuring both web and desktop applications.
 
-## Features
+## Project Structure
 
-- **TypeScript** - For type safety and improved developer experience
-- **TanStack Router** - File-based routing with full type safety
-- **TailwindCSS** - Utility-first CSS for rapid UI development
-- **shadcn/ui** - Reusable UI components
-- **Hono** - Lightweight, performant server framework
-- **tRPC** - End-to-end type-safe APIs
-- **Node.js** - Runtime environment
-- **Drizzle** - TypeScript-first ORM
-- **PostgreSQL** - Database engine
-- **Authentication** - Email & password authentication with Better Auth
-- **Turborepo** - Optimized monorepo build system
-- **Tauri** - Build native desktop applications
+This project is organized as a monorepo with separate applications:
+
+### Applications
+
+- **`apps/web`** - React 19 web application (port 3001)
+  - Built with Vite, TanStack Router, and Tailwind CSS v4
+  - Pure web application without desktop dependencies
+- **`apps/desktop`** - Tauri desktop application (port 3002)
+
+  - Built with the same React stack as the web app
+  - Uses Tauri for native desktop functionality
+  - Cross-platform desktop application (Windows, macOS, Linux)
+
+- **`apps/server`** - Hono backend with tRPC API
+  - Authentication with Better Auth
+  - Database integration with Drizzle ORM and PostgreSQL
+
+### Packages
+
+- **`packages/app`** - Shared React application code
+  - Contains all React components, routes, and business logic
+  - Shared between web and desktop applications
+  - Uses TanStack Router, Query, and Form
+- **`packages/ui`** - Shared UI components (Shadcn/ui)
+- **`packages/db`** - Database schema and configuration
+- Additional shared packages as needed
 
 ## Getting Started
 
-First, install the dependencies:
+### Prerequisites
+
+- Node.js 18+
+- pnpm 10+
+- Rust (for desktop app development)
+
+### Installation
 
 ```bash
+# Install all dependencies
 pnpm install
 ```
-## Database Setup
 
-This project uses PostgreSQL with Drizzle ORM.
+### Development
 
-1. Make sure you have a PostgreSQL database set up.
-2. Update your `apps/server/.env` file with your PostgreSQL connection details.
-
-3. Apply the schema to your database:
-```bash
-pnpm db:push
-```
-
-
-Then, run the development server:
+Run all applications in development mode:
 
 ```bash
 pnpm dev
 ```
 
-Open [http://localhost:3001](http://localhost:3001) in your browser to see the web application.
+Run specific applications:
 
-The API is running at [http://localhost:3000](http://localhost:3000).
+```bash
+# Web application only (http://localhost:3001)
+pnpm dev:web
 
+# Desktop application only
+pnpm dev:desktop
 
-
-## Project Structure
-
-```
-better-t-stack-1/
-├── apps/
-│   ├── web/         # Frontend application (React + TanStack Router)
-│   └── server/      # Backend API (Hono, TRPC)
+# Server only
+pnpm dev:server
 ```
 
-## Available Scripts
+### Building
 
-- `pnpm dev`: Start all applications in development mode
-- `pnpm build`: Build all applications
-- `pnpm dev:web`: Start only the web application
-- `pnpm dev:server`: Start only the server
-- `pnpm check-types`: Check TypeScript types across all apps
-- `pnpm db:push`: Push schema changes to database
-- `pnpm db:studio`: Open database studio UI
-- `cd apps/web && pnpm desktop:dev`: Start Tauri desktop app in development
-- `cd apps/web && pnpm desktop:build`: Build Tauri desktop app
+Build all applications:
+
+```bash
+pnpm build
+```
+
+Build specific applications:
+
+```bash
+# Build web application
+pnpm build:web
+
+# Build desktop application
+pnpm build:desktop
+```
+
+### Database
+
+```bash
+# Push database schema
+pnpm db:push
+
+# Open database studio
+pnpm db:studio
+
+# Generate migrations
+pnpm db:generate
+
+# Run migrations
+pnpm db:migrate
+```
+
+## Technology Stack
+
+### Frontend (Both Web & Desktop)
+
+- **React 19** with TypeScript
+- **TanStack Router v1** - File-based routing
+- **TanStack Query v5** - Data fetching and caching
+- **TanStack Form v1** - Form handling
+- **Vite v6** - Build tool and dev server
+- **Tailwind CSS v4** - Styling framework
+- **Shadcn/ui** - Component library
+
+### Desktop Specific
+
+- **Tauri v2** - Cross-platform desktop app framework
+- **Rust** - Backend for desktop application
+
+### Backend
+
+- **Hono v4** - Web framework
+- **tRPC v11** - Type-safe API layer
+- **Better Auth** - Authentication
+- **Drizzle ORM** - Database toolkit
+- **PostgreSQL** - Database
+
+### Development Tools
+
+- **pnpm** - Package manager
+- **Turbo** - Monorepo build system
+- **TypeScript** - Type system
+- **Zod** - Schema validation
+
+## Port Configuration
+
+- **Web App**: http://localhost:3001
+- **Desktop App**: http://localhost:3002 (for development)
+- **Server**: http://localhost:3000 (default)
+
+## Architecture
+
+Both the web and desktop applications share the same React codebase and components, ensuring feature parity while leveraging platform-specific capabilities through Tauri for the desktop version.

@@ -21,6 +21,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "../../packages/app/src"),
     },
   },
+  server: {
+    port: 3002,
+  },
   optimizeDeps: {
     include: ["react", "react-dom"],
   },
