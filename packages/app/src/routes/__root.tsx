@@ -45,9 +45,18 @@ function RootComponent() {
 	});
 
 	useEffect(() => {
+		const currentPath = window.location.pathname;
 		if (!session && !isPending) {
 			navigate({
 				to: '/login',
+			});
+		} else if (session && !isPending && currentPath === '/') {
+			navigate({
+				to: '/dashboard',
+			});
+		} else if (session && !isPending && currentPath === '/login') {
+			navigate({
+				to: '/dashboard',
 			});
 		}
 	}, [session, isPending]);
