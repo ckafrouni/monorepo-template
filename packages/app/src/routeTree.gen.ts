@@ -11,19 +11,14 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as TodosImport } from './routes/todos'
 import { Route as LoginImport } from './routes/login'
-import { Route as DashboardImport } from './routes/dashboard'
-import { Route as AiImport } from './routes/ai'
-import { Route as IndexImport } from './routes/index'
+import { Route as TodosIndexImport } from './routes/todos/index'
+import { Route as ProjectIndexImport } from './routes/project/index'
+import { Route as PlaygroundIndexImport } from './routes/playground/index'
+import { Route as DashboardIndexImport } from './routes/dashboard/index'
+import { Route as AnalyticsIndexImport } from './routes/analytics/index'
 
 // Create/Update Routes
-
-const TodosRoute = TodosImport.update({
-  id: '/todos',
-  path: '/todos',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const LoginRoute = LoginImport.update({
   id: '/login',
@@ -31,21 +26,33 @@ const LoginRoute = LoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const DashboardRoute = DashboardImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const TodosIndexRoute = TodosIndexImport.update({
+  id: '/todos/',
+  path: '/todos/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const AiRoute = AiImport.update({
-  id: '/ai',
-  path: '/ai',
+const ProjectIndexRoute = ProjectIndexImport.update({
+  id: '/project/',
+  path: '/project/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
-  id: '/',
-  path: '/',
+const PlaygroundIndexRoute = PlaygroundIndexImport.update({
+  id: '/playground/',
+  path: '/playground/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardIndexRoute = DashboardIndexImport.update({
+  id: '/dashboard/',
+  path: '/dashboard/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AnalyticsIndexRoute = AnalyticsIndexImport.update({
+  id: '/analytics/',
+  path: '/analytics/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -53,27 +60,6 @@ const IndexRoute = IndexImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/ai': {
-      id: '/ai'
-      path: '/ai'
-      fullPath: '/ai'
-      preLoaderRoute: typeof AiImport
-      parentRoute: typeof rootRoute
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardImport
-      parentRoute: typeof rootRoute
-    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -81,11 +67,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
-    '/todos': {
-      id: '/todos'
+    '/analytics/': {
+      id: '/analytics/'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AnalyticsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/playground/': {
+      id: '/playground/'
+      path: '/playground'
+      fullPath: '/playground'
+      preLoaderRoute: typeof PlaygroundIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/project/': {
+      id: '/project/'
+      path: '/project'
+      fullPath: '/project'
+      preLoaderRoute: typeof ProjectIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/todos/': {
+      id: '/todos/'
       path: '/todos'
       fullPath: '/todos'
-      preLoaderRoute: typeof TodosImport
+      preLoaderRoute: typeof TodosIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -94,53 +108,77 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/ai': typeof AiRoute
-  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/todos': typeof TodosRoute
+  '/analytics': typeof AnalyticsIndexRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/playground': typeof PlaygroundIndexRoute
+  '/project': typeof ProjectIndexRoute
+  '/todos': typeof TodosIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/ai': typeof AiRoute
-  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/todos': typeof TodosRoute
+  '/analytics': typeof AnalyticsIndexRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/playground': typeof PlaygroundIndexRoute
+  '/project': typeof ProjectIndexRoute
+  '/todos': typeof TodosIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/ai': typeof AiRoute
-  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/todos': typeof TodosRoute
+  '/analytics/': typeof AnalyticsIndexRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/playground/': typeof PlaygroundIndexRoute
+  '/project/': typeof ProjectIndexRoute
+  '/todos/': typeof TodosIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ai' | '/dashboard' | '/login' | '/todos'
+  fullPaths:
+    | '/login'
+    | '/analytics'
+    | '/dashboard'
+    | '/playground'
+    | '/project'
+    | '/todos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ai' | '/dashboard' | '/login' | '/todos'
-  id: '__root__' | '/' | '/ai' | '/dashboard' | '/login' | '/todos'
+  to:
+    | '/login'
+    | '/analytics'
+    | '/dashboard'
+    | '/playground'
+    | '/project'
+    | '/todos'
+  id:
+    | '__root__'
+    | '/login'
+    | '/analytics/'
+    | '/dashboard/'
+    | '/playground/'
+    | '/project/'
+    | '/todos/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AiRoute: typeof AiRoute
-  DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
-  TodosRoute: typeof TodosRoute
+  AnalyticsIndexRoute: typeof AnalyticsIndexRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+  PlaygroundIndexRoute: typeof PlaygroundIndexRoute
+  ProjectIndexRoute: typeof ProjectIndexRoute
+  TodosIndexRoute: typeof TodosIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AiRoute: AiRoute,
-  DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
-  TodosRoute: TodosRoute,
+  AnalyticsIndexRoute: AnalyticsIndexRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+  PlaygroundIndexRoute: PlaygroundIndexRoute,
+  ProjectIndexRoute: ProjectIndexRoute,
+  TodosIndexRoute: TodosIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -153,27 +191,31 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/ai",
-        "/dashboard",
         "/login",
-        "/todos"
+        "/analytics/",
+        "/dashboard/",
+        "/playground/",
+        "/project/",
+        "/todos/"
       ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/ai": {
-      "filePath": "ai.tsx"
-    },
-    "/dashboard": {
-      "filePath": "dashboard.tsx"
     },
     "/login": {
       "filePath": "login.tsx"
     },
-    "/todos": {
-      "filePath": "todos.tsx"
+    "/analytics/": {
+      "filePath": "analytics/index.tsx"
+    },
+    "/dashboard/": {
+      "filePath": "dashboard/index.tsx"
+    },
+    "/playground/": {
+      "filePath": "playground/index.tsx"
+    },
+    "/project/": {
+      "filePath": "project/index.tsx"
+    },
+    "/todos/": {
+      "filePath": "todos/index.tsx"
     }
   }
 }

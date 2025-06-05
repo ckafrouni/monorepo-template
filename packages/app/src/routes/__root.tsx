@@ -14,6 +14,10 @@ import {
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import '../index.css';
 
+import { AppSidebar } from '@/components/app-sidebar';
+import { SiteHeader } from '@/components/site-header';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+
 export interface RouterAppContext {
 	trpc: typeof trpc;
 	queryClient: QueryClient;
@@ -47,12 +51,27 @@ function RootComponent() {
 
 	return (
 		<>
-			<HeadContent />
 			<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-				<div className="grid h-svh grid-rows-[auto_1fr]">
-					<Header />
-					{isFetching ? <Loader /> : <Outlet />}
-				</div>
+				<SidebarProvider
+					style={
+						{
+							'--sidebar-width': 'calc(var(--spacing) * 72)',
+							'--header-height': 'calc(var(--spacing) * 12)',
+						} as React.CSSProperties
+					}
+				>
+					<AppSidebar variant="inset" />
+					<SidebarInset>
+						<SiteHeader />
+						<div className="flex flex-1 flex-col">
+							<div className="@container/main flex flex-1 flex-col gap-2">
+								<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+									{isFetching ? <Loader /> : <Outlet />}
+								</div>
+							</div>
+						</div>
+					</SidebarInset>
+				</SidebarProvider>
 				<Toaster richColors />
 			</ThemeProvider>
 			<TanStackRouterDevtools position="bottom-left" />

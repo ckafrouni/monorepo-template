@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { trpc } from '@/utils/trpc';
 import { useQuery } from '@tanstack/react-query';
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/dashboard/')({
 	component: HomeComponent,
 });
 

@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { trpc } from '@/utils/trpc';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-export const Route = createFileRoute('/todos')({
+export const Route = createFileRoute('/todos/')({
 	component: TodosRoute,
 });
 

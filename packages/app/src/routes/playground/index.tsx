@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Send } from 'lucide-react';
 import { useRef, useEffect } from 'react';
 
-export const Route = createFileRoute('/ai')({
+export const Route = createFileRoute('/playground/')({
 	component: RouteComponent,
 });
 
