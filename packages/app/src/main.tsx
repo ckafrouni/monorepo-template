@@ -6,6 +6,14 @@ import { routeTree } from "./routeTree.gen";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient, trpc } from "./utils/trpc";
 
+// 🔍 Debug: Log current origin for Tauri debugging
+if (typeof window !== "undefined") {
+  console.log("🌐 App Origin:", window.location.origin);
+  console.log("🌐 App Protocol:", window.location.protocol);
+  console.log("🌐 App Host:", window.location.host);
+  console.log("🌐 User Agent:", navigator.userAgent);
+}
+
 const router = createRouter({
   routeTree,
   defaultPreload: "intent",
