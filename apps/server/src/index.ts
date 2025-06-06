@@ -7,7 +7,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { streamText } from 'ai';
-import { google } from '@ai-sdk/google';
+import { openai } from '@ai-sdk/openai';
 import { stream } from 'hono/streaming';
 
 const app = new Hono();
@@ -39,7 +39,7 @@ app.post('/ai', async (c) => {
 	const messages = body.messages || [];
 
 	const result = streamText({
-		model: google('gemini-1.5-flash'),
+		model: openai('gpt-4.1-mini'),
 		messages,
 	});
 

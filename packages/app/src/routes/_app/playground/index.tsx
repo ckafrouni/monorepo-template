@@ -24,10 +24,11 @@ function RouteComponent() {
 	return (
 		<>
 			<SiteHeader breadcrumbs={[{ title: 'Playground', url: '/playground' }]} />
-			<div className="flex flex-1 flex-col">
+
+			<div className="relative mb-16 flex flex-1 flex-col overflow-auto overscroll-contain px-4">
 				<div className="@container/main flex flex-1 flex-col gap-2">
 					<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-						<div className="mx-auto grid w-full grid-rows-[1fr_auto] overflow-hidden p-4">
+						<div className="mx-auto grid w-full grid-rows-[1fr_auto]">
 							<div className="space-y-4 overflow-y-auto pb-4">
 								{messages.length === 0 ? (
 									<div className="text-muted-foreground mt-8 text-center">
@@ -50,28 +51,28 @@ function RouteComponent() {
 								)}
 								<div ref={messagesEndRef} />
 							</div>
-
-							<form
-								onSubmit={handleSubmit}
-								className="flex w-full items-center space-x-2 border-t pt-2"
-							>
-								<Input
-									name="prompt"
-									value={input}
-									onChange={handleInputChange}
-									placeholder="Type your message..."
-									className="flex-1"
-									autoComplete="off"
-									autoFocus
-								/>
-								<Button type="submit" size="icon">
-									<Send size={18} />
-								</Button>
-							</form>
 						</div>
 					</div>
 				</div>
 			</div>
+
+			<form
+				onSubmit={handleSubmit}
+				className="bg-sidebar absolute bottom-0 flex w-full items-center space-x-2 border-t px-4 py-2"
+			>
+				<Input
+					name="prompt"
+					value={input}
+					onChange={handleInputChange}
+					placeholder="Type your message..."
+					className="bg-background flex-1"
+					autoComplete="off"
+					autoFocus
+				/>
+				<Button type="submit" size="icon">
+					<Send size={18} />
+				</Button>
+			</form>
 		</>
 	);
 }
