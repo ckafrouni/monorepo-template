@@ -8,6 +8,7 @@ import {
 	BreadcrumbList,
 	BreadcrumbSeparator,
 } from './ui/breadcrumb';
+import { Link } from '@tanstack/react-router';
 
 export function SiteHeader({ breadcrumbs }: { breadcrumbs: { title: string; url: string }[] }) {
 	return (
@@ -20,7 +21,9 @@ export function SiteHeader({ breadcrumbs }: { breadcrumbs: { title: string; url:
 						{breadcrumbs.map((breadcrumb) => (
 							<>
 								<BreadcrumbItem key={breadcrumb.url}>
-									<BreadcrumbLink href={breadcrumb.url}>{breadcrumb.title}</BreadcrumbLink>
+									<BreadcrumbLink href={breadcrumb.url} asChild>
+										<Link to={breadcrumb.url}>{breadcrumb.title}</Link>
+									</BreadcrumbLink>
 								</BreadcrumbItem>
 								<BreadcrumbSeparator />
 							</>
