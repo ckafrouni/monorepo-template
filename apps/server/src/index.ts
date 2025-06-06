@@ -6,7 +6,7 @@ import { auth } from '@zentio/auth';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
-import { streamText } from 'ai';
+import { streamText, convertToCoreMessages } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { stream } from 'hono/streaming';
 
@@ -40,11 +40,13 @@ app.post('/ai', async (c) => {
 
 	const result = streamText({
 		model: openai('gpt-4.1-mini'),
-		messages,
+		messages: convertToCoreMessages(messages),
 	});
 
 	c.header('X-Vercel-AI-Data-Stream', 'v1');
 	c.header('Content-Type', 'text/plain; charset=utf-8');
+	c.header('Transfer-Encoding', 'chunked');
+	c.header('Connection', 'keep-alive');
 
 	return stream(c, (stream) => stream.pipe(result.toDataStream()));
 });

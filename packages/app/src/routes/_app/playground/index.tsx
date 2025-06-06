@@ -13,6 +13,7 @@ export const Route = createFileRoute('/_app/playground/')({
 function RouteComponent() {
 	const { messages, input, handleInputChange, handleSubmit } = useChat({
 		api: `${import.meta.env.VITE_SERVER_URL}/ai`,
+		streamProtocol: 'data',
 	});
 
 	const messagesEndRef = useRef<HTMLDivElement>(null);
