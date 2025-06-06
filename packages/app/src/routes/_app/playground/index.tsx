@@ -32,25 +32,19 @@ function RouteComponent() {
 					<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
 						<div className="mx-auto grid w-full grid-rows-[1fr_auto]">
 							<div className="space-y-4 overflow-y-auto">
-								{messages.length === 0 ? (
-									<div className="text-muted-foreground mt-8 text-center">
-										Ask me anything to get started!
+								{messages.map((message) => (
+									<div
+										key={message.id}
+										className={`rounded-lg p-3 ${
+											message.role === 'user' ? 'bg-primary/10 ml-8' : 'bg-secondary/20 mr-8'
+										}`}
+									>
+										<p className="mb-1 text-sm font-semibold">
+											{message.role === 'user' ? 'You' : 'AI Assistant'}
+										</p>
+										<div className="whitespace-pre-wrap">{message.content}</div>
 									</div>
-								) : (
-									messages.map((message) => (
-										<div
-											key={message.id}
-											className={`rounded-lg p-3 ${
-												message.role === 'user' ? 'bg-primary/10 ml-8' : 'bg-secondary/20 mr-8'
-											}`}
-										>
-											<p className="mb-1 text-sm font-semibold">
-												{message.role === 'user' ? 'You' : 'AI Assistant'}
-											</p>
-											<div className="whitespace-pre-wrap">{message.content}</div>
-										</div>
-									))
-								)}
+								))}
 								<div ref={messagesEndRef} />
 							</div>
 						</div>
