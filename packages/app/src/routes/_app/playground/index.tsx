@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Send } from 'lucide-react';
 import { useRef, useEffect } from 'react';
 import { SiteHeader } from '@/components/site-header';
+import { cn } from '@/lib/utils';
 
 export const Route = createFileRoute('/_app/playground/')({
 	component: RouteComponent,
@@ -26,11 +27,11 @@ function RouteComponent() {
 		<>
 			<SiteHeader breadcrumbs={[{ title: 'Playground', url: '/playground' }]} />
 
-			<div className="relative mb-16 flex flex-1 flex-col overflow-auto overscroll-contain px-4">
+			<div className="relative flex flex-1 flex-col overflow-auto overscroll-contain px-4 pb-24">
 				<div className="@container/main flex flex-1 flex-col gap-2">
 					<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
 						<div className="mx-auto grid w-full grid-rows-[1fr_auto]">
-							<div className="space-y-4 overflow-y-auto pb-4">
+							<div className="space-y-4 overflow-y-auto">
 								{messages.length === 0 ? (
 									<div className="text-muted-foreground mt-8 text-center">
 										Ask me anything to get started!
@@ -59,7 +60,11 @@ function RouteComponent() {
 
 			<form
 				onSubmit={handleSubmit}
-				className="bg-sidebar absolute bottom-0 flex w-full items-center space-x-2 border-t px-4 py-2"
+				className={cn(
+					'bg-sidebar rounded-t-lg border-x border-t',
+					'flex items-center space-x-2 p-3',
+					'absolute bottom-0 left-1/2 w-3/4 -translate-x-1/2'
+				)}
 			>
 				<Input
 					name="prompt"
