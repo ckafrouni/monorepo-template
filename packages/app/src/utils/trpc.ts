@@ -24,7 +24,7 @@ export const trpcClient: ReturnType<typeof createTRPCClient<AppRouter>> =
 	createTRPCClient<AppRouter>({
 		links: [
 			httpBatchLink({
-				url: `${import.meta.env.VITE_SERVER_URL}/trpc`,
+				url: `${import.meta.env.VITE_SERVER_URL}/api/trpc`,
 				fetch(url, options) {
 					return fetch(url, {
 						...options,
