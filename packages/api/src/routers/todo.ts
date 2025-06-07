@@ -1,5 +1,5 @@
 import z from 'zod/v4';
-import { publicProcedure } from '../nextjs/trpc';
+import { publicProcedure } from '../trpc';
 import { todo, db } from '@worspace/db';
 import { eq } from 'drizzle-orm';
 

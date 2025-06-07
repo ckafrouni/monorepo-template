@@ -1,6 +1,5 @@
 import 'dotenv/config';
-import { trpcServer } from '@hono/trpc-server';
-import { createHonoContext, appRouter } from '@worspace/api/hono';
+import { createTRPCHandler } from '@worspace/api/hono';
 import { auth } from '@worspace/auth';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
@@ -23,15 +22,9 @@ app.use(
 
 app.on(['POST', 'GET'], '/api/auth/**', (c) => auth.handler(c.req.raw));
 
-app.use(
-	'/trpc/*',
-	trpcServer({
-		router: appRouter,
-		createContext: (_opts, context) => {
-			return createHonoContext({ context });
-		},
-	})
-);
+// Use the new unified tRPC handler
+const trpcHandler = createTRPCHandler();
+app.use('/trpc/*', trpcHandler);
 
 app.post('/ai', async (c) => {
 	const body = await c.req.json();

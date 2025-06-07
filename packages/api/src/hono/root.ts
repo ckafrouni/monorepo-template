@@ -1,7 +1,7 @@
 import { router } from '../routers';
-import { createHonoRouter } from './trpc';
+import { createTRPCRouter } from '../trpc';
 
-export const appRouter = createHonoRouter({
+export const appRouter = createTRPCRouter({
 	router,
 });
 

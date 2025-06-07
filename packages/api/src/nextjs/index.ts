@@ -1,33 +1,12 @@
-import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
-
-import type { AppRouter } from '..';
-import { appRouter } from '..';
-import { createCallerFactory, createTRPCContext } from './trpc';
-
 /**
- * Create a server-side caller for the tRPC API
- * @example
- * const trpc = createCaller(createContext);
- * const res = await trpc.post.all();
- *       ^? Post[]
+ * Create tRPC context for Next.js
+ * This wraps the unified context creator with Next.js specific options
  */
-const createCaller = createCallerFactory(appRouter);
+export { createNextContext as createTRPCContext } from '../trpc';
 
 /**
- * Inference helpers for input types
- * @example
- * type PostByIdInput = RouterInputs['post']['byId']
- *      ^? { id: number }
- **/
-type RouterInputs = inferRouterInputs<AppRouter>;
+ * Export procedures and router creators from unified config
+ */
+export { createCallerFactory, createTRPCRouter, publicProcedure, protectedProcedure } from '../trpc';
 
-/**
- * Inference helpers for output types
- * @example
- * type AllPostsOutput = RouterOutputs['post']['all']
- *      ^? Post[]
- **/
-type RouterOutputs = inferRouterOutputs<AppRouter>;
-
-export { createTRPCContext, appRouter, createCaller };
-export type { AppRouter, RouterInputs, RouterOutputs };
+export { appRouter, type AppRouter } from './root';

@@ -7,7 +7,6 @@ import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
 import type { AppRouter } from '@worspace/api/nextjs';
 import { appRouter, createTRPCContext } from '@worspace/api/nextjs';
 
-import { auth } from '@worspace/auth';
 import { createQueryClient } from './query-client';
 
 /**
@@ -20,7 +19,6 @@ const createContext = cache(async () => {
 
 	return createTRPCContext({
 		headers: heads,
-		auth,
 	});
 });
 

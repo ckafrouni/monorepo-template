@@ -1,4 +1,4 @@
-import { protectedProcedure, publicProcedure } from '../nextjs/trpc';
+import { protectedProcedure, publicProcedure } from '../trpc';
 import { todoRouter } from './todo';
 
 export const router = {

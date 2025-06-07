@@ -1,6 +1,12 @@
+'use client';
+import { useTRPC } from '@/trpc/react';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 
 export default function Home() {
+	const trpc = useTRPC();
+	const todos = useQuery(trpc.router.todo.getAll.queryOptions());
+	console.log(todos);
 	return (
 		<div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
 			<main className="row-start-2 flex flex-col items-center gap-[32px] sm:items-start">
