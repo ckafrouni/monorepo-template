@@ -1,4 +1,3 @@
-export * from './utils/trpc';
 export * from './components/loader';
 
 import { RouterProvider, createRouter } from '@tanstack/react-router';
@@ -6,9 +5,9 @@ import { useEffect } from 'react';
 import Loader from './components/loader';
 import { routeTree } from './routeTree.gen';
 
-import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient, trpc } from './utils/trpc';
 import { deepLinkHandler } from './utils/deep-links';
+
+import { TRPCReactProvider } from '@/utils/client-side';
 
 interface AppProps {
 	platform: 'web' | 'desktop';
@@ -18,9 +17,9 @@ const router = createRouter({
 	routeTree,
 	defaultPreload: 'intent',
 	defaultPendingComponent: () => <Loader />,
-	context: { trpc, queryClient },
+	context: {},
 	Wrap: function WrapComponent({ children }: { children: React.ReactNode }) {
-		return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+		return <TRPCReactProvider>{children}</TRPCReactProvider>;
 	},
 });
 

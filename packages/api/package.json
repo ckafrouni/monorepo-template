@@ -7,7 +7,8 @@
 	"types": "src/index.ts",
 	"exports": {
 		"./hono": "./src/hono/index.ts",
-		"./nextjs": "./src/nextjs/index.ts"
+		"./nextjs": "./src/nextjs/index.ts",
+		"./src": "./src/index.ts"
 	},
 	"scripts": {
 		"clean": "rm -rf dist .cache node_modules .turbo",

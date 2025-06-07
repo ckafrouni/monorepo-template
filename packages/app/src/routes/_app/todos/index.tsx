@@ -6,7 +6,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Loader2, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
-import { trpc } from '@/utils/trpc';
+import { useTRPC } from '@/utils/client-side';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { SiteHeader } from '@/components/site-header';
 
@@ -16,6 +16,7 @@ export const Route = createFileRoute('/_app/todos/')({
 
 function TodosRoute() {
 	const [newTodoText, setNewTodoText] = useState('');
+	const trpc = useTRPC();
 
 	const todos = useQuery(trpc.router.todo.getAll.queryOptions());
 	const createMutation = useMutation(

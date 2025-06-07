@@ -1,8 +1,6 @@
 import Loader from '@/components/loader';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
-import { trpc } from '@/utils/trpc';
-import { type QueryClient } from '@tanstack/react-query';
 import { Outlet, createRootRouteWithContext, useRouterState } from '@tanstack/react-router';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 // import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
@@ -12,8 +10,7 @@ import { authClient } from '@/lib/auth-client';
 import { useEffect } from 'react';
 
 export interface RouterAppContext {
-	trpc: typeof trpc;
-	queryClient: QueryClient;
+
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
@@ -38,7 +35,8 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 });
 
 function RootComponent() {
-	const { data: session, isPending } = authClient.useSession();
+	const { data: session, isPending , error} = authClient.useSession();
+	console.log(error);
 	const navigate = Route.useNavigate();
 	const isFetching = useRouterState({
 		select: (s) => s.isLoading,

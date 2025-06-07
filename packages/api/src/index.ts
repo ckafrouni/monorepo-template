@@ -24,4 +24,4 @@ export {
 } from './hono';
 
 // Since both routers are identical, we can also export a unified type
-export type AppRouter = import('./nextjs').AppRouter; 
+export type AppRouter = import('./root').AppRouter; 

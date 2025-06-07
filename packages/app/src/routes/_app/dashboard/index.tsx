@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { trpc } from '@/utils/trpc';
+import { useTRPC } from '@/utils/client-side';
 import { useQuery } from '@tanstack/react-query';
 import { SiteHeader } from '@/components/site-header';
 
@@ -24,6 +24,8 @@ const TITLE_TEXT = `
  `;
 
 function HomeComponent() {
+	const trpc = useTRPC();
+	
 	const healthCheck = useQuery(trpc.router.healthCheck.queryOptions());
 
 	return (

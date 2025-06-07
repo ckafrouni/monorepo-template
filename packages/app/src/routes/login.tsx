@@ -2,13 +2,14 @@ import { createFileRoute } from '@tanstack/react-router';
 import { GalleryVerticalEnd } from 'lucide-react';
 import { LoginForm } from '@/components/login-form';
 import { useQuery } from '@tanstack/react-query';
-import { trpc } from '@/utils/trpc';
+import { useTRPC } from '@/utils/client-side';
 
 export const Route = createFileRoute('/login')({
 	component: RouteComponent,
 });
 
 function RouteComponent() {
+	const trpc = useTRPC();
 	const healthCheck = useQuery(trpc.router.healthCheck.queryOptions());
 
 	return (

@@ -1,6 +1,6 @@
 import { SiteHeader } from '@/components/site-header';
 import { authClient } from '@/lib/auth-client';
-import { trpc } from '@/utils/trpc';
+import { useTRPC } from '@/utils/client-side';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect } from 'react';
@@ -11,6 +11,7 @@ export const Route = createFileRoute('/_app/project/')({
 
 function RouteComponent() {
 	const { data: session, isPending } = authClient.useSession();
+	const trpc = useTRPC();
 
 	const navigate = Route.useNavigate();
 
