@@ -1,4 +1,4 @@
-import type { AppRouter } from '@zentio/api';
+import type { AppRouter } from '@worspace/api';
 import { QueryCache, QueryClient } from '@tanstack/react-query';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';

@@ -1,5 +1,5 @@
 {
-	"name": "@zentio/auth",
+	"name": "@worspace/auth",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",
@@ -8,7 +8,7 @@
 		".": "./src/auth.ts"
 	},
 	"dependencies": {
-		"@zentio/db": "workspace:*",
+		"@worspace/db": "workspace:*",
 		"better-auth": "^1.2.8"
 	},
 	"devDependencies": {

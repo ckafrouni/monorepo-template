@@ -1,7 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { db } from '@zentio/db';
-import * as schema from '@zentio/db/schema/auth';
+import { db } from '@worspace/db';
+import * as schema from '@worspace/db/schema/auth';
 
 export const auth = betterAuth({
 	database: drizzleAdapter(db, {

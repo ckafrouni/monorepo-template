@@ -1,9 +1,9 @@
 import z from 'zod/v4';
-import { router, publicProcedure } from '../lib/trpc';
-import { todo, db } from '@zentio/db';
+import { publicProcedure } from '../nextjs/trpc';
+import { todo, db } from '@worspace/db';
 import { eq } from 'drizzle-orm';
 
-export const todoRouter = router({
+export const todoRouter = {
 	getAll: publicProcedure.query(async () => {
 		return await db.select().from(todo);
 	}),
@@ -25,4 +25,4 @@ export const todoRouter = router({
 	delete: publicProcedure.input(z.object({ id: z.number() })).mutation(async ({ input }) => {
 		return await db.delete(todo).where(eq(todo.id, input.id));
 	}),
-});
+};

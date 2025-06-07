@@ -63,7 +63,7 @@ _Always use the latest stable versions unless specified otherwise_
 ### Project Structure Adherence
 
 - Follow the monorepo structure with `apps/`, `packages/`
-- Use workspace imports for shared packages (currently using `@zentio/*` naming)
+- Use workspace imports for shared packages (currently using `@worspace/*` naming)
 - Maintain separation between web app, server, and shared packages
 
 ### Pnpm Workspace Structure

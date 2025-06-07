@@ -1,7 +1,7 @@
-import { protectedProcedure, publicProcedure, router } from '../lib/trpc';
+import { protectedProcedure, publicProcedure } from '../nextjs/trpc';
 import { todoRouter } from './todo';
 
-export const appRouter = router({
+export const router = {
 	healthCheck: publicProcedure.query(() => {
 		return 'OK';
 	}),
@@ -12,5 +12,4 @@ export const appRouter = router({
 		};
 	}),
 	todo: todoRouter,
-});
-export type AppRouter = typeof appRouter;
+};

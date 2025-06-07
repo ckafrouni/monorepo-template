@@ -24,7 +24,7 @@
 		"@tanstack/react-query-devtools": "^5.69.0"
 	},
 	"dependencies": {
-		"@zentio/app": "workspace:*",
+		"@worspace/app": "workspace:*",
 		"@tailwindcss/vite": "^4.0.15",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0"

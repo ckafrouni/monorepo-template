@@ -1,8 +1,8 @@
 // Desktop App Entry Point
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from '@zentio/app';
-import '@zentio/app/src/index.css';
+import { App } from '@worspace/app';
+import '@worspace/app/src/index.css';
 
 // Tauri-specific setup
 async function initTauri() {
