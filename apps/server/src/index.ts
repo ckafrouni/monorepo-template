@@ -7,6 +7,7 @@ import { logger } from 'hono/logger';
 import { streamText, convertToCoreMessages } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { stream } from 'hono/streaming';
+import { serve } from '@hono/node-server';
 
 const app = new Hono();
 
@@ -22,9 +23,8 @@ app.use(
 
 app.on(['POST', 'GET'], '/api/auth/**', (c) => auth.handler(c.req.raw));
 
-// Use the new unified tRPC handler
-const trpcHandler = createTRPCHandler();
-app.use('/trpc/*', trpcHandler);
+const trpcHandler = createTRPCHandler({ endpoint: '/api/trpc' });
+app.use('/api/trpc/*', trpcHandler);
 
 app.post('/ai', async (c) => {
 	const body = await c.req.json();
@@ -46,8 +46,6 @@ app.post('/ai', async (c) => {
 app.get('/', (c) => {
 	return c.text('OK');
 });
-
-import { serve } from '@hono/node-server';
 
 serve(
 	{

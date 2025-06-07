@@ -7,10 +7,10 @@ import { createHonoContext } from '../trpc';
  * Create tRPC handler for Hono
  * This returns a middleware function that can be used with Hono
  */
-export const createTRPCHandler = () => {
+export const createTRPCHandler = (options?: { endpoint?: string }) => {
 	return async (c: HonoContext) => {
 		const response = await fetchRequestHandler({
-			endpoint: '/trpc',
+			endpoint: options?.endpoint || '/trpc',
 			req: c.req.raw,
 			router: appRouter,
 			createContext: () => createHonoContext(c),
