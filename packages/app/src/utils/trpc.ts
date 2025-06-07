@@ -1,8 +1,9 @@
-import type { AppRouter } from '@worspace/api';
+import type { AppRouter } from '@worspace/api/hono';
 import { QueryCache, QueryClient } from '@tanstack/react-query';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
 import { toast } from 'sonner';
+import superjson from 'superjson';
 
 export const queryClient = new QueryClient({
 	queryCache: new QueryCache({
@@ -30,6 +31,7 @@ export const trpcClient: ReturnType<typeof createTRPCClient<AppRouter>> =
 						credentials: 'include',
 					});
 				},
+				transformer: superjson,
 			}),
 		],
 	});

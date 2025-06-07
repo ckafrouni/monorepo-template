@@ -17,9 +17,9 @@ export const Route = createFileRoute('/_app/todos/')({
 function TodosRoute() {
 	const [newTodoText, setNewTodoText] = useState('');
 
-	const todos = useQuery(trpc.todo.getAll.queryOptions());
+	const todos = useQuery(trpc.router.todo.getAll.queryOptions());
 	const createMutation = useMutation(
-		trpc.todo.create.mutationOptions({
+		trpc.router.todo.create.mutationOptions({
 			onSuccess: () => {
 				todos.refetch();
 				setNewTodoText('');
@@ -27,14 +27,14 @@ function TodosRoute() {
 		})
 	);
 	const toggleMutation = useMutation(
-		trpc.todo.toggle.mutationOptions({
+		trpc.router.todo.toggle.mutationOptions({
 			onSuccess: () => {
 				todos.refetch();
 			},
 		})
 	);
 	const deleteMutation = useMutation(
-		trpc.todo.delete.mutationOptions({
+		trpc.router.todo.delete.mutationOptions({
 			onSuccess: () => {
 				todos.refetch();
 			},

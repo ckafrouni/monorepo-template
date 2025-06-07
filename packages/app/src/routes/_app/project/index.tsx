@@ -14,7 +14,7 @@ function RouteComponent() {
 
 	const navigate = Route.useNavigate();
 
-	const privateData = useQuery(trpc.privateData.queryOptions());
+	const privateData = useQuery(trpc.router.privateData.queryOptions());
 
 	useEffect(() => {
 		if (!session && !isPending) {

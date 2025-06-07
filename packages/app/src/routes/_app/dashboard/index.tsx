@@ -24,7 +24,7 @@ const TITLE_TEXT = `
  `;
 
 function HomeComponent() {
-	const healthCheck = useQuery(trpc.healthCheck.queryOptions());
+	const healthCheck = useQuery(trpc.router.healthCheck.queryOptions());
 
 	return (
 		<>
