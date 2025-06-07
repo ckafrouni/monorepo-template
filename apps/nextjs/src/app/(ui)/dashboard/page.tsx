@@ -1,7 +1,7 @@
-'use client';
-import { useTRPC } from '@/trpc/react';
+import { caller } from '@/trpc/server';
 import { useQuery } from '@tanstack/react-query';
 import { SiteHeader } from '@/components/site-header';
+import { WithAuthProvider } from '@/providers/auth';
 
 const TITLE_TEXT = `
  ██████╗ ███████╗████████╗████████╗███████╗██████╗
@@ -19,10 +19,8 @@ const TITLE_TEXT = `
     ╚═╝       ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
  `;
 
-export default function Page() {
-	const trpc = useTRPC();
-
-	const healthCheck = useQuery(trpc.router.healthCheck.queryOptions());
+async function Page() {
+	const healthCheck = await caller.router.healthCheck();
 
 	return (
 		<>
@@ -34,14 +32,10 @@ export default function Page() {
 						<h2 className="mb-2 font-medium">API Status</h2>
 						<div className="flex items-center gap-2">
 							<div
-								className={`h-2 w-2 rounded-full ${healthCheck.data ? 'bg-green-500' : 'bg-red-500'}`}
+								className={`h-2 w-2 rounded-full ${healthCheck ? 'bg-green-500' : 'bg-red-500'}`}
 							/>
 							<span className="text-muted-foreground text-sm">
-								{healthCheck.isLoading
-									? 'Checking...'
-									: healthCheck.data
-										? 'Connected'
-										: 'Disconnected'}
+								{healthCheck ? 'Connected' : 'Disconnected'}
 							</span>
 						</div>
 					</section>
@@ -50,3 +44,5 @@ export default function Page() {
 		</>
 	);
 }
+
+export default WithAuthProvider(Page);
