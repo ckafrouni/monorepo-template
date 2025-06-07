@@ -1,4 +1,4 @@
-import { router } from '../routers';
+import { router } from './routers';
 import { createTRPCRouter } from './trpc';
 
 export const appRouter = createTRPCRouter({

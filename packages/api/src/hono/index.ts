@@ -1,7 +1,7 @@
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 import type { Context as HonoContext } from 'hono';
-import { appRouter } from './root';
-import { createHonoContext } from './trpc';
+import { appRouter } from '../root';
+import { createHonoContext } from '../trpc';
 
 /**
  * Create tRPC handler for Hono
@@ -19,5 +19,5 @@ export const createTRPCHandler = () => {
 	};
 };
 
-export { appRouter, type AppRouter } from './root';
+export { appRouter, type AppRouter } from '../root';
 export { createHonoContext } from './trpc';

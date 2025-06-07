@@ -16,6 +16,7 @@
 		"@worspace/api": "workspace:*",
 		"@worspace/auth": "workspace:*",
 		"next": "15.3.3",
+		"pg": "^8.14.1",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
 		"superjson": "^2.2.2"
