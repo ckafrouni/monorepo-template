@@ -1,9 +1,9 @@
 ---
 description: 
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
-# Zentio Project - Cursor Rules
+# Better T-Stack Project - Cursor Rules
 
 #### Frontend Stack
 
@@ -14,8 +14,9 @@ alwaysApply: true
 - **TanStack Form v1** - Form handling
 - **Vite v6** - Build tool and dev server
 - **Tailwind CSS v4** - Latest styling framework
-- **Shadcn/ui** - Component library (stored in packages/ui/components/ui)
+- **Radix UI** - Primitive component library (Avatar, Dialog, Dropdown, etc.)
 - **Recharts v2** - Charting library
+- **AI SDK** - AI integration with React hooks
 
 _Always use the latest stable versions unless specified otherwise_
 
@@ -23,9 +24,9 @@ _Always use the latest stable versions unless specified otherwise_
 
 - **Hono v4** - Web framework
 - **tRPC v11** - Type-safe API layer
-- **Better Auth** - Authentication (modern, type-safe auth)
-- **Drizzle-kit** - Database toolkit and ORM
-- **PostgreSQL v16+** - Primary database
+- **Better Auth v1** - Authentication (modern, type-safe auth)
+- **Drizzle ORM v0.38** - Database toolkit and ORM
+- **PostgreSQL** - Primary database with pg driver
 
 _Always use the latest stable versions unless specified otherwise_
 
@@ -34,8 +35,8 @@ _Always use the latest stable versions unless specified otherwise_
 - **pnpm v10+** - Package manager (preferred)
 - **TypeScript v5** - Type system
 - **Zod v3** - Schema validation
-- **Date-fns v4** - Date utilities
 - **Lucide React** - Icons
+- **Turbo** - Monorepo build system
 
 _Always use the latest stable versions unless specified otherwise_
 
@@ -61,28 +62,24 @@ _Always use the latest stable versions unless specified otherwise_
 
 ### Project Structure Adherence
 
-- Follow the monorepo structure with apps/, packages/, tooling/
-- Use workspace imports (`@zentio/ui`, `@zentio/db`, etc.)
+- Follow the monorepo structure with `apps/`, `packages/`
+- Use workspace imports for shared packages (currently using `@zentio/*` naming)
 - Maintain separation between web app, server, and shared packages
 
 ### Pnpm Workspace Structure
 
 **Apps (apps/):**
 
-- `@zentio/web` - React 19 web application with TanStack Router
-- `@zentio/server` - Hono backend with tRPC API layer
-- `@zentio/scheduler` - Background job processing and scheduling
+- `web` - React 19 web application with TanStack Router (main frontend)
+- `server` - Hono backend with tRPC API layer
+- `desktop` - Desktop application (likely Tauri-based)
 
 **Packages (packages/):**
 
-- `@zentio/ui` - Shared UI components with Shadcn/ui (Tailwind CSS v4)
-- `@zentio/db` - Database schema and Drizzle configuration (PostgreSQL)
-- `@zentio/dal` - Data Access Layer with org-scoped DAOs
-- `@zentio/db-seed` - Database seeding utilities and test data
-
-**Tooling (tooling/):**
-
-- `@zentio/tsconfig` - Shared TypeScript configurations
+- `app` - Main shared React application code and routing
+- `api` - tRPC API definitions and routers  
+- `db` - Database schema and Drizzle configuration (PostgreSQL)
+- `auth` - Authentication configuration with Better Auth
 
 **Workspace Dependencies:**
 
@@ -95,78 +92,43 @@ _Always use the latest stable versions unless specified otherwise_
 **Route-Based Architecture (TanStack Router):**
 
 ```
-apps/web/src/routes/
+packages/app/src/routes/
 ├── __root.tsx                    # Root route layout
-├── index.tsx                     # Landing page
-└── $orgSlug/                     # Organization-scoped routes
-    ├── login.tsx                 # Auth routes
-    ├── route.tsx                 # Org layout
-    ├── -components/              # Org-level shared components
-    ├── settings/                 # Settings section
-    └── _pathlessLayout/          # Main app layout
-        ├── route.tsx             # Layout route
-        ├── dashboard/            # Dashboard section
-        ├── data/                 # MRP entities (CRUD)
-        │   ├── workers/
-        │   ├── machines/
-        │   ├── manufacturing-orders/
-        │   ├── parts/
-        │   └── [entity]/
-        │       ├── index.tsx     # List view
-        │       ├── $id.tsx       # Detail view
-        │       └── -components/  # Entity-specific components
-        │           ├── columns.tsx
-        │           ├── [entity]-dialog.tsx
-        │           └── [entity]-sidepanel.tsx
-        ├── planning/             # Planning & scheduling
-        │   ├── index.tsx
-        │   ├── -components/           # Planning UI components
-        │   ├── -features/        # Feature-specific modules
-        │   │   ├── gantt/
-        │   │   ├── scheduler/
-        │   │   └── resource-planning/
-        │   └── -tabs/            # Tab-specific components
-        └── shopfloor/            # Shop floor operations
+├── login.tsx                     # Authentication route
+└── _app/                         # Main app layout
+    ├── route.tsx                 # App layout route
+    ├── dashboard/                # Dashboard section
+    ├── analytics/                # Analytics section
+    ├── playground/               # Development/testing area
+    ├── project/                  # Project management
+    └── todos/                    # Todo management
 ```
 
 **Component Organization:**
 
 ```
-apps/web/src/components/
+packages/app/src/components/
+├── ui/                           # UI components (Radix-based)
 ├── layout/                       # Global layout components
 ├── forms/                        # Shared form components
 ├── tables/                       # Shared table components
 ├── charts/                       # Shared chart/visualization components
-├── [global-component].tsx        # Shared across entire app
-└── [domain-component].tsx        # Domain-specific global components
+└── [feature-component].tsx      # Feature-specific components
 ```
 
 **Naming Conventions:**
 
-- **Files**: kebab-case (`worker-dialog.tsx`, `manufacturing-orders/`)
-- **Folders with prefix `-`**: Internal/private folders with descriptive names (`-components/`, `-tabs/`, `-features/`)
-- **Route parameters**: `$orgSlug`, `$id` for dynamic segments
-- **Components**: PascalCase exports (`WorkerDialog`, `DataTable`)
+- **Files**: kebab-case (`todo-list.tsx`, `analytics-dashboard.tsx`)
+- **Folders with prefix `_`**: Layout routes without URL segments
+- **Route parameters**: Dynamic segments as needed
+- **Components**: PascalCase exports (`TodoList`, `DataTable`)
 - **Folder purposes**: Use clear, descriptive names that indicate functionality
-
-**Entity Structure Pattern:**
-Each MRP entity follows this structure:
-
-- `index.tsx` - List view with filtering, pagination, CRUD operations
-- `$id.tsx` - Detail view for individual entity
-- `-components/` - Entity-specific components
-  - `columns.tsx` - Table column definitions
-  - `[entity]-dialog.tsx` - Add/edit modal
-  - `[entity]-sidepanel.tsx` - Detail sidepanel
-- `-features/` - Complex nested functionality (scheduling, analytics)
 
 **Key Patterns:**
 
-- **Organization scoping**: All routes under `$orgSlug` for multitenancy
-- **Pathless layouts**: Using `_pathlessLayout` for nested layout without URL segments
-- **Co-located components**: Components near their usage with `-components/` folders
-- **Consistent CRUD patterns**: List → Detail → Edit flow for all entities
-- **Filter-enabled lists**: Built-in filtering, search, and pagination
+- **Pathless layouts**: Using `_app` for nested layout without URL segments
+- **Co-located components**: Components near their usage
+- **Consistent patterns**: Shared component structure across features
 - **Type-safe routing**: TanStack Router with TypeScript integration
 
 ### Frontend Patterns
@@ -175,105 +137,59 @@ Each MRP entity follows this structure:
 - Implement tRPC for type-safe API calls
 - Use TanStack Query for data fetching and caching
 - **Always use TanStack libraries for consistency across the stack**
-- Apply Tailwind CSS v4 with class-variance-authority for component variants
-- Use Shadcn/ui components from packages/ui/components/ui
+- Apply Tailwind CSS v4 for styling
+- Use Radix UI primitives for accessible components
 - Use TanStack Form with Zod validation
 - **Prefer pnpm for all package management operations**
+- Use AI SDK for AI integration features
 
 ### Backend Patterns
 
 - Use Hono as the web framework foundation
-- Use tRPC routers in `/src/routers/` for type-safe APIs
+- Use tRPC routers in `packages/api/src/routers/` for type-safe APIs
 - Implement authentication with Better Auth (modern, type-safe auth)
-- Use Drizzle-kit with PostgreSQL for database operations and migrations
-- Use database access layer (DAL) from `@zentio/dal`
-- Follow the established schema patterns
+- Use Drizzle ORM with PostgreSQL for database operations
+- Follow the established schema patterns in `packages/db/src/schema/`
 - Integrate Better Auth with tRPC for protected routes
 - Use Better Auth sessions for user management
 
-### Multitenancy & Data Access Strategy
-
-- **Organization-based multitenancy** - Each organization has isolated data access
-- **Org-specific DAL** - All database operations must be scoped to the current organization
-- **PostgreSQL with row-level security** - Database-level tenant isolation
-- **tRPC context with orgId** - Every API call includes organization context
-- **Better Auth organization association** - Users belong to specific organizations
-- **Data isolation patterns** - Ensure no cross-organization data leakage
-
-**DAL Strategy:**
-
-- **Org DAL** - `createOrgDAO(organizationId)` for organization-scoped data
-- **User DAL** - `createUserDAO(userId)` for user-specific data (settings, preferences)
-- **Public DAL** - Direct access for public data (organizations, public configurations)
-- All DAO classes take `organizationId` in constructor for automatic data scoping
-- Use PostgreSQL schemas or RLS (Row Level Security) for tenant isolation
-- Validate organization membership in tRPC middleware before creating org DAL
-- Cache organization-specific data appropriately
-
-**DAL Usage Patterns:**
-
-```typescript
-// Organization-scoped manufacturing data
-const orgDAO = createOrgDAO(organizationId);
-const workers = await orgDAO.workers.findAll();
-const manufacturingOrders = await orgDAO.manufacturingOrders.findByStatus('active');
-
-// User-specific data
-const userDAO = createUserDAO(userId);
-const settings = await userDAO.userSettings.get();
-
-// Public data (no org scoping needed)
-import { OrganizationsDAO } from '@zentio/dal';
-const organizations = await OrganizationsDAO.findAll();
-```
-
 ### Component Development
 
-- Create reusable components in `@zentio/ui` package
-- Use Shadcn/ui components from packages/ui/components/ui
+- Use Radix UI primitives as the foundation for custom components
 - Use proper TypeScript interfaces and types
 - Implement responsive design with Tailwind CSS v4
-- Follow accessibility best practices
+- Follow accessibility best practices with Radix UI
 - **Maintain clean HTML structure for easier debugging**
 - **Use clean, semantic CSS classes that are self-documenting**
+- Use class-variance-authority (cva) for component variants
+- Use clsx and tailwind-merge for conditional styling
 
-### Manufacturing Resource Planning (MRP II) Domain
+### Key Dependencies & Integration Patterns
 
-Zentio is an **MRP II (Manufacturing Resource Planning)** system with comprehensive manufacturing and business management capabilities:
+**UI & Styling:**
+- **Radix UI** - Avatar, Checkbox, Dialog, Dropdown Menu, Label, Select, Separator, Slot, Tabs, Toggle, Tooltip
+- **Tailwind CSS v4** - Latest styling with @tailwindcss/vite plugin
+- **class-variance-authority** - Component variant management
+- **lucide-react** - Icon system
+- **next-themes** - Theme management
+- **sonner** - Toast notifications
+- **vaul** - Drawer/modal components
 
-**Core MRP II Functionality:**
+**Data & State Management:**
+- **TanStack Query** - Server state management and caching
+- **TanStack Form** - Form handling with validation
+- **TanStack Table** - Advanced table functionality
+- **@hookform/resolvers** - Form validation integration
+- **zod** - Runtime type validation
 
-- Material Requirements Planning (MRP I integration)
-- Production planning and scheduling
-- Capacity Requirements Planning (CRP)
-- Financial planning and budgeting
-- Business resource planning and allocation
-- Shop floor control and execution
-- Master Production Schedule (MPS) management
-- Sales & Operations Planning (S&OP)
+**Interactions & Experience:**
+- **@dnd-kit** - Drag and drop functionality (core, modifiers, sortable, utilities)
+- **@ai-sdk/react** - AI chat and streaming interfaces
+- **recharts** - Data visualization and charts
 
-**Key Business Entities:**
-
-- Workers, workstations, shifts management
-- Manufacturing orders and operations
-- Parts, products, and sales orders
-- Bills of Materials (BOMs) and routing
-- Inventory levels and material requirements
-- Production schedules and capacity planning
-
-**Consider MRP II-specific patterns when generating code for:**
-
-- **Complex data relationships** - BOMs, routings, work centers, resource hierarchies
-- **Real-time manufacturing data** - Production status, inventory levels, capacity utilization
-- **Scheduling algorithms** - Resource optimization, capacity planning, constraint management
-- **Financial integration** - Cost accounting, budgeting, variance analysis, profitability
-- **Business planning** - Sales forecasting, demand planning, S&OP processes
-- **Data visualization** - Gantt charts, production dashboards, financial reports (Recharts)
-- **Drag-and-drop functionality** - Schedule management, resource allocation (@dnd-kit)
-- **Material flow tracking** - Inventory movements, work-in-progress, procurement
-- **Performance metrics** - OEE, cycle times, resource efficiency, financial KPIs
-- **Multi-level planning** - Strategic, tactical, and operational decision support
-- **Multi-tenant architecture** - Organization-isolated manufacturing data and processes
+**Backend Integration:**
+- **@trpc/client & @trpc/tanstack-react-query** - Type-safe API integration
+- **better-auth** - Authentication client-side integration
 
 ### Error Handling & Performance
 
@@ -281,6 +197,7 @@ Zentio is an **MRP II (Manufacturing Resource Planning)** system with comprehens
 - Implement loading states and optimistic updates
 - Follow React 19 patterns and best practices
 - Use Suspense for data fetching where appropriate
+- Use TanStack Query for efficient caching and background updates
 
 ### Code Quality
 
@@ -288,6 +205,7 @@ Zentio is an **MRP II (Manufacturing Resource Planning)** system with comprehens
 - Follow TypeScript strict mode practices
 - Implement proper testing patterns
 - Use proper Git commit conventions
+- Use Turbo for efficient monorepo builds
 
 ## Decision Making Process
 
