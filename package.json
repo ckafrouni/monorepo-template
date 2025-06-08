@@ -22,7 +22,11 @@
 		"db:generate": "turbo -F @worspace/db db:generate",
 		"db:migrate": "turbo -F @worspace/db db:migrate"
 	},
-	"dependencies": {},
+	"dependencies": {
+		"@t3-oss/env-core": "^0.13.6",
+		"@t3-oss/env-nextjs": "^0.13.6",
+		"zod": "^3.25.56"
+	},
 	"devDependencies": {
 		"prettier": "^3.5.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",

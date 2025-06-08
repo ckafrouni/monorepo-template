@@ -8,6 +8,7 @@ import { createTRPCContext } from '@trpc/tanstack-react-query';
 import SuperJSON from 'superjson';
 
 import type { AppRouter } from '@worspace/api/src';
+import { env } from '../env';
 
 import { createQueryClient } from './query-client';
 
@@ -32,7 +33,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
 			links: [
 				loggerLink({
 					enabled: (op) =>
-						import.meta.env.DEV ||
+						env.NODE_ENV === 'development' ||
 						(op.direction === 'down' && op.result instanceof Error),
 				}),
 				httpBatchStreamLink({
@@ -57,11 +58,11 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
 	);
 }
 
-const getBaseUrl = () => {
-	// For client-side in Vite, we use import.meta.env
-	if (typeof window !== 'undefined' && import.meta.env.VITE_SERVER_URL) {
-		return import.meta.env.VITE_SERVER_URL;
+function getBaseUrl() {
+	if (typeof window !== 'undefined' && env.VITE_SERVER_URL) {
+		return env.VITE_SERVER_URL;
 	}
-	// Fallback to localhost
+
+	// fallback to localhost
 	return 'http://localhost:8080';
-};
+}

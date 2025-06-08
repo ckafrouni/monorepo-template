@@ -3,10 +3,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from '@worspace/app';
 import '@worspace/app/src/index.css';
+import { env } from './env';
 
 // Web-specific setup and error handling
-const isDev = process.env.NODE_ENV === 'development';
-const isProd = process.env.NODE_ENV === 'production';
+const isDev = env.NODE_ENV === 'development';
+const isProd = env.NODE_ENV === 'production';
 
 if (isDev) {
 	// Web dev tools setup can go here

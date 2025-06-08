@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-set -a && source docker.env && set +a
+set -a && source .env && set +a
 
 echo "🧹 Cleaning up containers..."
 docker compose down -v

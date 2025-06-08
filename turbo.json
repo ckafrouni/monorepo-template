@@ -5,17 +5,19 @@
 		"build": {
 			"dependsOn": ["^build"],
 			"inputs": ["$TURBO_DEFAULT$", ".env*"],
-			"outputs": ["dist/**"]
+			"outputs": ["dist/**", ".cache/tsbuildinfo.json"]
 		},
 		"clean": {
 			"cache": false,
 			"persistent": false
 		},
 		"lint": {
-			"dependsOn": ["^lint"]
+			"dependsOn": ["^lint"],
+			"outputs": [".cache/.eslintcache"]
 		},
 		"check-types": {
-			"dependsOn": ["^check-types"]
+			"dependsOn": ["^check-types"],
+			"outputs": [".cache/tsbuildinfo.json"]
 		},
 		"dev": {
 			"cache": false,
@@ -23,23 +25,40 @@
 		},
 		"db:push": {
 			"cache": false,
-			"persistent": true,
-			"env": ["DATABASE_URL"]
+			"persistent": true
 		},
 		"db:studio": {
 			"cache": false,
-			"persistent": true,
-			"env": ["DATABASE_URL"]
+			"persistent": true
 		},
 		"db:migrate": {
 			"cache": false,
-			"persistent": true,
-			"env": ["DATABASE_URL"]
+			"persistent": true
 		},
 		"db:generate": {
 			"cache": false,
-			"persistent": true,
-			"env": ["DATABASE_URL"]
+			"persistent": true
 		}
-	}
+	},
+	"globalEnv": [
+		"DATABASE_URL",
+		"POSTGRES_USER",
+		"POSTGRES_PASSWORD",
+		"POSTGRES_DB",
+		"POSTGRES_PORT",
+		"BETTER_AUTH_SECRET",
+		"BETTER_AUTH_URL",
+		"CORS_ORIGIN",
+		"VITE_SERVER_URL",
+		"OPENAI_API_KEY",
+		"PORT"
+	],
+	"globalPassThroughEnv": [
+		"NODE_ENV",
+		"CI",
+		"VERCEL",
+		"VERCEL_ENV",
+		"VERCEL_URL",
+		"npm_lifecycle_event"
+	]
 }

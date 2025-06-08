@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { createTRPCHandler } from '@worspace/api/hono';
 import { auth } from '@worspace/auth';
 import { Hono } from 'hono';
@@ -8,6 +7,7 @@ import { streamText, convertToCoreMessages } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { stream } from 'hono/streaming';
 import { serve } from '@hono/node-server';
+import { env } from './env.js';
 
 const app = new Hono();
 
@@ -15,7 +15,7 @@ app.use(logger());
 app.use(
 	'/*',
 	cors({
-		origin: process.env.CORS_ORIGIN?.split(',') || [],
+		origin: env.CORS_ORIGIN?.split(',') || [],
 		allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 		credentials: true,
 	})
@@ -47,12 +47,11 @@ app.get('/', (c) => {
 	return c.text('OK');
 });
 
-serve(
-	{
-		fetch: app.fetch,
-		port: 8080,
-	},
-	(info) => {
-		console.log(`Server is running on http://localhost:${info.port}`);
-	}
-);
+// Start server
+const port = env.PORT;
+console.log(`🚀 Server running on http://localhost:${port}`);
+
+serve({
+	fetch: app.fetch,
+	port,
+});

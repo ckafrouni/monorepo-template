@@ -3,10 +3,11 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev --turbopack",
-		"build": "next build",
-		"start": "next start",
-		"lint": "next lint"
+		"dev": "pnpm with-env next dev --turbopack",
+		"build": "pnpm with-env next build",
+		"start": "pnpm with-env next start",
+		"lint": "next lint",
+		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
 		"@tanstack/react-query": "^5.69.0",
@@ -15,6 +16,7 @@
 		"@trpc/tanstack-react-query": "^11.0.0",
 		"@worspace/api": "workspace:*",
 		"@worspace/auth": "workspace:*",
+		"@worspace/env": "workspace:*",
 		"next": "15.3.3",
 		"pg": "^8.14.1",
 		"react": "^19.0.0",
@@ -27,6 +29,7 @@
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
+		"dotenv-cli": "^8.0.0",
 		"eslint": "^9",
 		"eslint-config-next": "15.3.3",
 		"tailwindcss": "^4",

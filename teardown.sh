@@ -1,9 +1,12 @@
 #!/bin/bash
+set -euo pipefail
 
-set -e
-set -a
-source docker.env
-set +a
+source .env
 
+echo "🧹 Cleaning up containers..."
 docker compose down -v
-pnpm clean
+
+echo "🗑️ Removing PostgreSQL data..."
+docker volume rm monorepo-template_postgres_data 2>/dev/null || true
+
+echo "✅ Teardown complete!"

@@ -1,0 +1,23 @@
+{
+	"name": "@worspace/env",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"main": "src/index.ts",
+	"exports": {
+		".": "./src/index.ts",
+		"./base": "./src/base.ts",
+		"./vite": "./src/vite.ts"
+	},
+	"dependencies": {
+		"@worspace/auth": "workspace:*",
+		"@t3-oss/env-nextjs": "^0.13.6",
+		"@t3-oss/env-core": "^0.13.6",
+		"zod": "^3.25.56"
+	},
+	"devDependencies": {
+		"@types/node": "^22.13.13",
+		"typescript": "^5.7.2",
+		"vite": "^6.2.2"
+	}
+} 

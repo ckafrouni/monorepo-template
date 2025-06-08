@@ -4,25 +4,28 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "tauri dev",
-		"build": "tauri build --debug",
+		"dev": "pnpm with-env tauri dev",
+		"build": "pnpm with-env tauri build --debug",
 		"clean": "rm -rf .tauri node_modules dist src-tauri/target .cache",
 		"serve": "vite preview",
-		"start": "tauri dev",
+		"start": "pnpm with-env tauri dev",
 		"check-types": "tsc --noEmit",
 		"tauri": "tauri",
-		"vite:dev": "vite --port=3002",
-		"vite:build": "vite build"
+		"vite:dev": "pnpm with-env vite --port=3002",
+		"vite:build": "pnpm with-env vite build",
+		"with-env": "dotenv -e ../../.env --"
 	},
 	"devDependencies": {
 		"@tanstack/react-query-devtools": "^5.69.0",
 		"@tanstack/react-router-devtools": "^1.114.27",
 		"@tanstack/router-plugin": "^1.114.27",
 		"@tauri-apps/cli": "^2.4.0",
+		"@t3-oss/env-core": "^0.13.6",
 		"@types/node": "^22.13.13",
 		"@types/react": "^19.0.12",
 		"@types/react-dom": "^19.0.4",
 		"@vitejs/plugin-react": "^4.3.4",
+		"dotenv-cli": "^8.0.0",
 		"postcss": "^8.5.3",
 		"tailwindcss": "^4.0.15",
 		"typescript": "^5.8.3",
@@ -32,6 +35,7 @@
 		"@tailwindcss/vite": "^4.0.15",
 		"@tauri-apps/api": "^2.5.0",
 		"@worspace/app": "workspace:*",
+		"@worspace/env": "workspace:*",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0"
 	}

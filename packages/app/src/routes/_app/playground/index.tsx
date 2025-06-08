@@ -6,6 +6,7 @@ import { Send } from 'lucide-react';
 import { useRef, useEffect } from 'react';
 import { SiteHeader } from '@/components/site-header';
 import { cn } from '@/lib/utils';
+import { env } from '@/env';
 
 export const Route = createFileRoute('/_app/playground/')({
 	component: RouteComponent,
@@ -13,7 +14,7 @@ export const Route = createFileRoute('/_app/playground/')({
 
 function RouteComponent() {
 	const { messages, input, handleInputChange, handleSubmit } = useChat({
-		api: `${import.meta.env.VITE_SERVER_URL}/ai`,
+		api: `${env.VITE_SERVER_URL}/ai`,
 		streamProtocol: 'data',
 	});
 

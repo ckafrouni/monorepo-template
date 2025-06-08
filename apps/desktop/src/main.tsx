@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from '@worspace/app';
 import '@worspace/app/src/index.css';
+import { env } from './env';
 
 // Tauri-specific setup
 async function initTauri() {
@@ -18,7 +19,18 @@ async function initTauri() {
 	}
 }
 
-// Desktop-specific error handling
+// Desktop-specific setup and error handling
+const isDev = env.NODE_ENV === 'development';
+
+if (isDev) {
+	console.log('🖥️ Desktop app running in development mode');
+}
+
+// Error boundary for desktop app
+window.addEventListener('error', (event) => {
+	console.error('Desktop app error:', event.error);
+});
+
 window.addEventListener('unhandledrejection', (event) => {
 	console.error('Unhandled promise rejection:', event.reason);
 
@@ -33,12 +45,6 @@ window.addEventListener('unhandledrejection', (event) => {
 			// Silent fallback if Tauri not available
 		});
 });
-
-// Desktop-specific performance monitoring
-const isDev = process.env.NODE_ENV === 'development';
-if (isDev) {
-	console.log('Desktop app running in development mode');
-}
 
 const rootElement = document.getElementById('app');
 
